@@ -104,7 +104,7 @@ $i = 0;
 }
 	if (isset($_GET['delete'])) {
 		$id = $_GET['delete'];
-		var_dump($id); die();
+		
 		mysqli_query($con, "delete from guestuser where id = '$id'");
 		header("location:index1.php?msg=1");
 	}
