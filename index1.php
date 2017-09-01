@@ -1,4 +1,5 @@
-<?php include("server.php"); ?>
+<?php
+include("server.php"); ?>
 <html>
 <head>
 	<title>Main Page</title>
@@ -11,13 +12,14 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-<script type="text/javascript" src = "jquery.js"></script>
+<script type="text/javascript" src = "jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 	$("#parent").click(function(){
-		if($("#parent").attr('checked')==true){
+		if($("#parent").is(':checked')){
 			$('.child').attr('checked', true);
 		}else{
 			$('.child').attr('checked', false);
@@ -47,8 +49,11 @@
 			$_GET['msg'] = "Error...";
 			$color = "red";
 		}
-	
-
+		else if ($type == "6") {
+			$_GET['msg'] = "Welcome " .$_SESSION['username'];
+			$color = "green";
+		}
+		
  ?>
 
  <div class = "msg">
@@ -75,6 +80,10 @@
 	<div class = "container">
 		<div class="page-header">
   <h1>Guest<small>book</small></h1>
+</div>
+<div>
+<a href="logout
+.php"><button class = "btn btn-primary">Logout</button></a>
 </div>
 <form method = "post" action = "server.php">
 	<table class = "table table-bordered">
@@ -143,6 +152,8 @@
 	    $('#modalDelete').attr('href', 'server.php?delete=' + id);
 	  });
 	});
+
+	  setTimeout(function(){ jQuery('.msg').fadeOut("slow") }, 3000);
 
 </script>
 </body>

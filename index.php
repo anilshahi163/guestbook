@@ -12,13 +12,17 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-<script type="text/javascript" src = "jquery.js"></script>
+<script type="text/javascript" src = "jquery.min.js"></script>
 <body>
 	<?php 
 	if (isset($_GET['msg'])) {
 		$type = $_GET['msg'];
 		if ($type == "0") {
 			$_GET['msg'] = "Sorry, You are not an authorized user.";
+			$color = "red";
+		}
+		if ($type == "1") {
+			$_GET['msg'] = "Successfully logged out.";
 			$color = "green";
 		}
 		
@@ -28,7 +32,7 @@
 
  <div class = "msg">
  	<?php   
- 		if ($color == "green"){ ?>
+ 		if ($color == "red"){ ?>
  		<div class="alert alert-danger alert-dismissible" role="alert">
   
   <strong><?php echo $_GET['msg']; ?></strong>
@@ -37,13 +41,14 @@
  	
  	<?php	
  	}else{ ?>
-		 	<div class="alert alert-danger alert-dismissible" role="alert">
+		 	<div class="alert alert-success alert-dismissible" role="alert">
   
   <strong><?php echo $_GET['msg']; ?></strong>
 		<?php }
 		?>
 
  </div>
+</div>
  <?php } ?>
 <div class = "container">
 <form action = "server.php" method = "post">
@@ -52,7 +57,7 @@
 <div class = "form-group">
 <label for = "Username">Username</label>
 <input type = "text" class = "form-control" name = "username" placeholder = "Enter your username here.">
-<small class = "form-text text-muted">Remember, It should be unique.</small>
+<small class = "form-text text-muted">Remember, First letter should be capital.</small>
 </div>
 
 <div class = "form-group">
@@ -65,5 +70,9 @@
 </fieldset>
 </form>
 </div>
+<script type="text/javascript">
+setTimeout(function(){ jQuery('.msg').fadeOut("slow") }, 3000);
+
+</script>
 </body>
 </html>

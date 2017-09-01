@@ -47,7 +47,7 @@ $i = 0;
 	}
 
 
-	$con = mysqli_connect('localhost','root','admin','crud');
+	$con = mysqli_connect('localhost','root','','crud');
 	$result = mysqli_query($con,"SELECT * from guestuser");
 	
 	if (isset($_POST['login'])) {
