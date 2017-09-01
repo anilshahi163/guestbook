@@ -47,13 +47,13 @@ $i = 0;
 	}
 
 
-	$con = mysqli_connect('localhost','root','','crud');
+	$con = mysqli_connect('localhost','root','admin','crud');
 	$result = mysqli_query($con,"SELECT * from guestuser");
 	
 	if (isset($_POST['login'])) {
 	$username = $_POST['username'];
 	$password = $_POST['password'];
-
+	$_SESSION['username'] = $username;
 	$query = "SELECT * from login where Username = '$username' AND Password = '$password'";
 	$result1 = mysqli_query($con, $query);
 	$row = mysqli_fetch_array($result1);
@@ -63,7 +63,7 @@ $i = 0;
 	// var_dump($username);
 	// var_dump($password);die;
 	if ($row['Username'] == $username && $row['Password'] == $password && !empty($username) && !empty($password)) {
-		header("location:index1.php");
+		header("location:index1.php?msg=6");
 	}else{
 		header("location:index.php?msg=0");
 	}
@@ -104,6 +104,7 @@ $i = 0;
 }
 	if (isset($_GET['delete'])) {
 		$id = $_GET['delete'];
+		var_dump($id); die();
 		mysqli_query($con, "delete from guestuser where id = '$id'");
 		header("location:index1.php?msg=1");
 	}
