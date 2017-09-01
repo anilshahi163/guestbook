@@ -3,12 +3,12 @@
 		$id = $_GET['id'];
 		$rec = mysqli_query($con, "SELECT * from guestuser where id = '$id'");
 		$record = mysqli_fetch_array($rec);
-		$name = $record['name'];
-		$address = $record['address'];
-		$email = $record['email'];
-		$number = $record['Mobile_number'];
-		$status = $record['status'];
-		$id = $record['id'];
+		$name = mysqli_real_escape_string($record['name']);
+		$address = mysqli_real_escape_string($record['address']);
+		$email = mysqli_real_escape_string($record['email']);
+		$number = mysqli_real_escape_string($record['Mobile_number']);
+		$status = mysqli_real_escape_string($record['status']);
+		$id = mysqli_real_escape_string($record['id']);
 	}
 
  ?>

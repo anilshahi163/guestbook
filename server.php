@@ -51,8 +51,8 @@ $i = 0;
 	$result = mysqli_query($con,"SELECT * from guestuser");
 	
 	if (isset($_POST['login'])) {
-	$username = $_POST['username'];
-	$password = $_POST['password'];
+	$username = mysqli_real_escape_string($_POST['username']);
+	$password = mysqli_real_escape_string($_POST['password']);
 	$_SESSION['username'] = $username;
 	$query = "SELECT * from login where Username = '$username' AND Password = '$password'";
 	$result1 = mysqli_query($con, $query);
@@ -74,22 +74,22 @@ $i = 0;
 		
 	
 	if (isset($_POST['send'])) {
-		$name = $_POST['name'];
-		$address = $_POST['address']; 
-		$email = $_POST['email'];
-		$number = $_POST['number'];
-		$status = $_POST['status'];
+		$name = mysqli_real_escape_string($_POST['name']);
+		$address = mysqli_real_escape_string($_POST['address']); 
+		$email = mysqli_real_escape_string($_POST['email']);
+		$number = mysqli_real_escape_string($_POST['number']);
+		$status = mysqli_real_escape_string($_POST['status']);
 		$query = "insert into guestuser(name,address,email,mobile_number,status)values('$name','$address','$email','$number','$status')";
 		mysqli_query($con,$query);
 		header("location:index1.php?msg=0");
 	}
 	if (isset($_POST['update'])) {
-		$name = $_POST['name'];
-		$address = $_POST['address'];
-		$email = $_POST['email'];
-		$number = $_POST['number'];
-		$status = $_POST['status'];
-		$id = $_POST['id'];
+		$name = mysqli_real_escape_string($_POST['name']);
+		$address = mysqli_real_escape_string($_POST['address']);
+		$email = mysqli_real_escape_string($_POST['email']);
+		$number = mysqli_real_escape_string($_POST['number']);
+		$status = mysqli_real_escape_string($_POST['status']);
+		$id = mysqli_real_escape_string($_POST['id']);
 
 		$query = "UPDATE guestuser set name = '$name',address = '$address',email = '$email',Mobile_number = '$number',status = '$status' where id = '$id'";
 		mysqli_query($con, $query);
