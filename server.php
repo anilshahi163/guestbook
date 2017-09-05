@@ -47,12 +47,12 @@ $i = 0;
 	}
 
 
-	$con = mysqli_connect('localhost','root','admin','crud');
+	$con = mysqli_connect('localhost','root','','crud');
 	$result = mysqli_query($con,"SELECT * from guestuser");
 	
 	if (isset($_POST['login'])) {
-	$username = mysqli_real_escape_string($_POST['username']);
-	$password = mysqli_real_escape_string($_POST['password']);
+	$username = mysqli_real_escape_string($con,$_POST['username']);
+	$password = mysqli_real_escape_string($con,$_POST['password']);
 	$_SESSION['username'] = $username;
 	$query = "SELECT * from login where Username = '$username' AND Password = '$password'";
 	$result1 = mysqli_query($con, $query);
@@ -63,7 +63,7 @@ $i = 0;
 	// var_dump($username);
 	// var_dump($password);die;
 	if ($row['Username'] == $username && $row['Password'] == $password && !empty($username) && !empty($password)) {
-		header("location:index1.php?msg=6");
+		header("location:Practice.php?msg=6");
 	}else{
 		header("location:index.php?msg=0");
 	}
@@ -74,39 +74,39 @@ $i = 0;
 		
 	
 	if (isset($_POST['send'])) {
-		$name = mysqli_real_escape_string($_POST['name']);
-		$address = mysqli_real_escape_string($_POST['address']); 
-		$email = mysqli_real_escape_string($_POST['email']);
-		$number = mysqli_real_escape_string($_POST['number']);
-		$status = mysqli_real_escape_string($_POST['status']);
+		$name = mysqli_real_escape_string($con,$_POST['name']);
+		$address = mysqli_real_escape_string($con,$_POST['address']); 
+		$email = mysqli_real_escape_string($con,$_POST['email']);
+		$number = mysqli_real_escape_string($con,$_POST['number']);
+		$status = mysqli_real_escape_string($con,$_POST['status']);
 		$query = "insert into guestuser(name,address,email,mobile_number,status)values('$name','$address','$email','$number','$status')";
 		mysqli_query($con,$query);
-		header("location:index1.php?msg=0");
+		header("location:Practice.php?msg=6");
 	}
 	if (isset($_POST['update'])) {
-		$name = mysqli_real_escape_string($_POST['name']);
-		$address = mysqli_real_escape_string($_POST['address']);
-		$email = mysqli_real_escape_string($_POST['email']);
-		$number = mysqli_real_escape_string($_POST['number']);
-		$status = mysqli_real_escape_string($_POST['status']);
-		$id = mysqli_real_escape_string($_POST['id']);
+		$name = mysqli_real_escape_string($con,$_POST['name']);
+		$address = mysqli_real_escape_string($con,$_POST['address']);
+		$email = mysqli_real_escape_string($con,$_POST['email']);
+		$number = mysqli_real_escape_string($con,$_POST['number']);
+		$status = mysqli_real_escape_string($con,$_POST['status']);
+		$id = mysqli_real_escape_string($con,$_POST['id']);
 
 		$query = "UPDATE guestuser set name = '$name',address = '$address',email = '$email',Mobile_number = '$number',status = '$status' where id = '$id'";
 		mysqli_query($con, $query);
-		header("location:index1.php?msg=2");
+		header("location:Practice.php?msg=6");
 	}
 }else{
 	if (isset($_POST['send'])) {
-		header("location:create.php?msg=3");
+		header("location:create.php?msg=6");
 	}else if(isset($_POST['update'])){
-		header("location:edit.php?msg=3");
+		header("location:edit.php?msg=6");
 	}
 }
 	if (isset($_GET['delete'])) {
 		$id = $_GET['delete'];
 		
 		mysqli_query($con, "delete from guestuser where id = '$id'");
-		header("location:index1.php?msg=1");
+		header("location:Practice.php?msg=6");
 	}
 	if (isset($_GET['edit'])) {
 		$id = $_GET['edit'];
@@ -122,7 +122,7 @@ $i = 0;
 			$result = mysqli_query($con, $sql);
 		}
 		if ($result) {
-			header("location:index1.php?msg=1");
+			header("location:Practice.php?msg=6");
 		}else{
 			echo "Sorry, failed to delete.";
 		}
