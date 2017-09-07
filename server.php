@@ -1,9 +1,9 @@
 <?php
 	session_start();
-	$name = $address = $email = $number = "";
-	$nameErr = $addressErr = $emailErr = $numberErr = "";
+	$name = $address = $email = $number = $username = $password = "";
+	$nameErr = $addressErr = $emailErr = $numberErr = $usernameErr = $passwordErr = "";
 $i = 0;
-	if (isset($_POST['send']) || isset($_POST['update'])) {
+	if (isset($_POST['send']) || isset($_POST['update']) || isset($_POST['loginsend'])) {
 		$_SESSION['post_data'] = $_POST;	
 		if (empty($_POST['name'])) {
 			$i++;
@@ -44,11 +44,29 @@ $i = 0;
 		}else{
 			$number = $_POST['number'];
 		}
+		if (empty($_POST['username'])) {
+			$i++;
+			$_SESSION['usernameErr'] = "This field must be filled";
+		}else{
+			$username = $_POST['username'];
+		}
+		if (!preg_match('/^[A-Za-z ]*$/', $username)) {
+			$i++;
+			$_SESSION['usernameErr'] = "Sorry,Not a valid username. Try another one.";
+		}
+		if (empty($_POST['password'])) {
+			$i++;
+			$_SESSION['passwordErr'] = "You cannot leave it blank";
+		}else{
+			$password = $_POST['password'];
+		}
+
 	}
 
 
 	$con = mysqli_connect('localhost','root','admin','crud');
 	$result = mysqli_query($con,"SELECT * from guestuser");
+	$loginresult = mysqli_query($con, "SELECT * from login");
 	
 	if (isset($_POST['login'])) {
 	$username = mysqli_real_escape_string($con,$_POST['username']);
@@ -81,7 +99,7 @@ $i = 0;
 		$status = mysqli_real_escape_string($con,$_POST['status']);
 		$query = "insert into guestuser(name,address,email,mobile_number,status)values('$name','$address','$email','$number','$status')";
 		mysqli_query($con,$query);
-		header("location:Practice.php?msg=6");
+		header("location:Practice.php?msg=0");
 	}
 	if (isset($_POST['update'])) {
 		$name = mysqli_real_escape_string($con,$_POST['name']);
@@ -93,20 +111,28 @@ $i = 0;
 
 		$query = "UPDATE guestuser set name = '$name',address = '$address',email = '$email',Mobile_number = '$number',status = '$status' where id = '$id'";
 		mysqli_query($con, $query);
-		header("location:Practice.php?msg=6");
+		header("location:Practice.php?msg=2");
+	}
+	if (isset($_POST['loginsend'])){
+		$username = mysqli_real_escape_string($con, $_POST['username']);
+		$password = mysqli_real_escape_string($con, $_POST['password']);
+
+		$query = "INSERT into login(Username,Password)values('$username','$password')";
+		mysqli_query($con, $query);
+		header("location:Practice.php?msg=0");
 	}
 }else{
 	if (isset($_POST['send'])) {
-		header("location:create.php?msg=6");
+		header("location:create.php?msg=3");
 	}else if(isset($_POST['update'])){
-		header("location:edit.php?msg=6");
+		header("location:edit.php?msg=3");
 	}
 }
 	if (isset($_GET['delete'])) {
 		$id = $_GET['delete'];
 		
 		mysqli_query($con, "delete from guestuser where id = '$id'");
-		header("location:Practice.php?msg=6");
+		header("location:Practice.php?msg=1");
 	}
 	if (isset($_GET['edit'])) {
 		$id = $_GET['edit'];
@@ -122,7 +148,7 @@ $i = 0;
 			$result = mysqli_query($con, $sql);
 		}
 		if ($result) {
-			header("location:Practice.php?msg=6");
+			header("location:Practice.php?msg=1");
 		}else{
 			echo "Sorry, failed to delete.";
 		}

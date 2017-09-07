@@ -239,7 +239,7 @@ include("server.php"); ?>
 							Open Modal
 						</span></a></li>
 
-						<li><a class="shortcut-button" href="loginshow.php"><span>
+						<li><a class="shortcut-button" href="#"><span>
 							<img src="assets/img/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
 							See Users
 						</span></a></li>
@@ -290,12 +290,8 @@ include("server.php"); ?>
 									<thead>
 										<tr>
 											<th>Select all <input type = "checkbox" id = "parent"><input type = "submit" name = "deleteSelected" class = "btn btn-danger" value = "Delete Selected"></th>
-											<th>Name</th>
-											<th>Address</th>
-											<th>Email</th>
-											<th>Mobile number</th>
-											<th>Status</th>
-											<th>Action</th>
+											<th>Username</th>
+											<th>Password</th>
 										</tr>
 
 									</thead>
@@ -327,17 +323,15 @@ include("server.php"); ?>
 
 									<tbody>
 										<?php
-										while ($row = mysqli_fetch_array($result)){
+										while ($row = mysqli_fetch_array($loginresult)){
 
 
 											?>
 											<tr>
 												<td><input type = "checkbox" class = "child" name = "checkbox[]" value = "<?php echo $row['id']; ?>"></td>
-												<td><?php echo $row['name']; ?></td>
-												<td><?php echo $row['address']; ?></td>
-												<td><?php echo $row['email']; ?></td>
-												<td><?php echo $row['Mobile_number']; ?></td>
-												<td><?php if($row['status']){ echo 'Active'; }else{ echo 'Inactive'; } ?></td>
+												<td><?php echo $row['Username']; ?></td>
+												<td><?php echo $row['Password']; ?></td>
+				
 												<td><a class = "btn btn-danger" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/img/cross.png"></a>
 													<a class = "btn btn-info" title = "Edit" href = "server.php?edit=<?php echo $row['id']; ?>"><img src="assets/img/pencil.png"></button></a></td>
 
@@ -443,51 +437,24 @@ $(document).ready(function() {
 						</form> -->
 						<form class = "form-horizontal" method = "post" action = "server.php">
 							<fieldset>
-								<legend><h3>Create form</h3></legend>
+								<legend><h3>Add a User</h3></legend>
 
 								<div class = "form-group">
-									<label for = "name">Name</label>
+									<label for = "name">Username</label>
 									<div class = "col-sm-10">
-										<input type = "text" class="text-input small-input" name = "name" class = "form-control" placeholder = "Enter your name here" value="<?php echo isset($_SESSION['post_data']['name'])? $_SESSION['post_data']['name'] : ''; ?>">
-										<span style = "color:red"><p><?php echo isset($_SESSION['nameErr'])?$_SESSION['nameErr']:'' ?></p></span>
+										<input type = "text" class="text-input small-input" name = "username" class = "form-control" placeholder = "Enter your name here">
+										<span style = "color:red"><p><?php echo isset($_SESSION['usernameErr'])?$_SESSION['usernameErr']:'' ?></p></span>
 									</div></div>
 									<div class = "form-group">
-										<label for = "address">Address</label>
+										<label for = "address">Password</label>
 										<div class = "col-sm-10">
-											<input type = "text" class="text-input small-input" name = "address" class = "form-control" placeholder = "Enter your address here" value = "<?php echo isset($_SESSION['post_data']['address'])? $_SESSION['post_data']['address'] : ''; ?>">
-											<span style = "color:red"><p><?php echo isset($_SESSION['addressErr'])?$_SESSION['addressErr']:'' ?></p></span>
+											<input type = "text" class="text-input small-input" name = "password" class = "form-control" placeholder = "Enter your address here">
+											<span style = "color:red"><p><?php echo isset($_SESSION['passwordErr'])?$_SESSION['passwordErr']:'' ?></p></span>
 										</div></div>
-										<div class = "form-group">
-											<label for = "email">Email</label>
-											<div class = "col-sm-10">
-												<input type = "text" class="text-input small-input" name = "email" class = "form-control" placeholder = "Enter your email here" value = "<?php echo isset($_SESSION['post_data']['email'])? $_SESSION['post_data']['email'] : ''; ?>">
-												<span style = "color:red"><p><?php echo isset($_SESSION['emailErr'])?$_SESSION['emailErr']:'' ?></p></span>
-											</div></div>
-											<div class = "form-group">
-												<label for = "Mobile_number">Mobile Number</label>
-												<div class = "col-sm-10">
-													<input type = "text" class="text-input small-input" name = "number" class = "form-control" placeholder = "Enter your number here" value = "<?php echo isset($_SESSION['post_data']['number'])? $_SESSION['post_data']['number'] : ''; ?>">
-													<span style = "color:red"><p><?php echo isset($_SESSION['numberErr'])?$_SESSION['numberErr']:'' ?></p></span>
-												</div></div>
-												<div class = "form-group">
-													<label for = "status">Status</label>
-													<div class = "col-sm-10">
-														<div class = "radio">
-															<label>
-																<input type = "radio" name = "status" value = "1" checked>Active
-															</label>
-														</div>
-
-														<div class = "radio">
-															<label>
-																<input type = "radio" name = "status" value = "0">Inactive
-															</label>
-														</div>
-													</div>
-												</div>
+										
 												<div class = "form-group">
 													<div class = "col-sm-offset-2 col-sm-10">
-														<input type = "submit" class = "button" value = "send" name = "send">
+														<input type = "submit" class = "button" value = "send" name = "loginsend">
 													</div>
 												</div>
 
