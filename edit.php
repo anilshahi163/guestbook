@@ -139,7 +139,7 @@
 		  
 			<!-- Sidebar Profile links -->
 			<div id="profile-links">
-				Hello, <a href="#" title="Edit your profile"><?php echo $_SESSION['username']; ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
+				Hello, <a href="#" title="Edit your profile"><?php if(isset($_SESSION['logged_username'])){ echo $_SESSION['logged_username']; } ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
 				<br />
 				<a href="#" title="View the Site">View the Site</a> | <a href="logout.php?msg=2" title="Sign Out">Sign Out</a>
 			</div>        
@@ -271,7 +271,7 @@
 			</noscript>
 			
 			<!-- Page Head -->
-			<h2>Welcome <?php echo $_SESSION['username']; ?></h2>
+			<h2>Welcome <?php if(isset($_SESSION['logged_username'])){ echo $_SESSION['logged_username']; } ?></h2>
 			<p id="page-intro">What would you like to do?</p>
 			
 			<ul class="shortcut-buttons-set">

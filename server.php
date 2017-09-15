@@ -78,7 +78,6 @@ $i = 0;
 	if (isset($_POST['login'])) {
 	$username = mysqli_real_escape_string($con,$_POST['username']);
 	$password = mysqli_real_escape_string($con,$_POST['password']);
-	$_SESSION['username'] = $username;
 	$query = "SELECT * from login where Username = '$username' AND Password = '$password'";
 	$result1 = mysqli_query($con, $query);
 	$row = mysqli_fetch_array($result1);
@@ -88,8 +87,10 @@ $i = 0;
 	// var_dump($username);
 	// var_dump($password);die;
 	if ($row['Username'] == $username && $row['Password'] == $password && !empty($username) && !empty($password)) {
+		$_SESSION['logged_username'] = $username;
 		header("location:Practice.php?msg=6");
 	}else{
+		$_SESSION['logged_username'] = '';
 		header("location:index.php?msg=0");
 	}
 	}
@@ -106,6 +107,7 @@ $i = 0;
 		$status = mysqli_real_escape_string($con,$_POST['status']);
 		$query = "insert into guestuser(name,address,email,mobile_number,status)values('$name','$address','$email','$number','$status')";
 		mysqli_query($con,$query);
+		 unset($_SESSION['post_data']);
 		header("location:Practice.php?msg=0");
 	}
 	if (isset($_POST['update'])) {

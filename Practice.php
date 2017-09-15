@@ -47,7 +47,7 @@ include("server.php"); ?>
 				else if ($type == "2") {
 					$_GET['msg'] = "Successfully updated...";
 					$color = "green";
-					 session_destroy();
+					
 				}
 				else if ($type == "3") {
 					$_GET['msg'] = "Error...";
@@ -63,8 +63,8 @@ include("server.php"); ?>
 
 				<?php } ?>
 
-				<?php unset($_SESSION['post_data']); ?>
-
+				
+				
 			</head>
 
 			<body><div id="body-wrapper"> <!-- Wrapper for the radial gradient background -->
@@ -78,7 +78,7 @@ include("server.php"); ?>
 
 					<!-- Sidebar Profile links -->
 					<div id="profile-links">
-						Hello, <a href="#" title="Edit your profile"><?php echo $_SESSION['username']; ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
+						Hello, <a href="#" title="Edit your profile"><?php if(isset($_SESSION['logged_username'])){ echo $_SESSION['logged_username']; } ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
 						<br />
 						<a href="#" title="View the Site">View the Site</a> | <a href="logout.php" title="Sign Out">Sign Out</a>
 					</div>        
@@ -210,7 +210,7 @@ include("server.php"); ?>
 					</noscript>
 
 					<!-- Page Head -->
-					<h2>Welcome <?php echo $_SESSION['username']; ?></h2>
+					<h2>Welcome <?php if(isset($_SESSION['logged_username'])){ echo $_SESSION['logged_username']; } ?></h2>
 					<p id="page-intro">What would you like to do?</p>
 
 					<ul class="shortcut-buttons-set">
@@ -495,7 +495,11 @@ $(document).ready(function() {
 													</div>
 												</div>
 
-
+												<?php unset($_SESSION['nameErr']); ?>
+				<?php unset($_SESSION['addressErr']); ?>
+				<?php unset($_SESSION['emailErr']); ?>
+				<?php unset($_SESSION['numberErr']); ?>
+				<?php unset($_SESSION['post_data']); ?>
 
 											</fieldset>
 										</form>
