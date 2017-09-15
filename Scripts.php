@@ -20,6 +20,8 @@
 	<!-- Invalid Stylesheet. This makes stuff look pretty. Remove it if you want the CSS completely valid -->
 	<link rel="stylesheet" href="assets/css/invalid.css" type="text/css" media="screen" />	
 
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
 		<!-- Colour Schemes
 	  
 		Default colour scheme is green. Uncomment prefered stylesheet to use it.
@@ -53,5 +55,6 @@
 			<!-- jQuery Datepicker Plugin -->
 			<script type="text/javascript" src="assets/js/jquery.datePicker.js"></script>
 			<script type="text/javascript" src="assets/js/jquery.date.js"></script>
+			<script type="text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 			<!--[if IE]><script type="text/javascript" src="resources/scripts/jquery.bgiframe.js"></script><![endif]-->
 

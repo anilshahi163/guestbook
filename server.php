@@ -1,9 +1,9 @@
 <?php
 	session_start();
-	$name = $address = $email = $number = $username = $password = "";
-	$nameErr = $addressErr = $emailErr = $numberErr = $usernameErr = $passwordErr = "";
+	$name = $address = $email = $number = "";
+	$nameErr = $addressErr = $emailErr = $numberErr = "";
 $i = 0;
-	if (isset($_POST['send']) || isset($_POST['update']) || isset($_POST['loginsend'])) {
+	if (isset($_POST['send']) || isset($_POST['update'])) {
 		$_SESSION['post_data'] = $_POST;	
 		if (empty($_POST['name'])) {
 			$i++;
@@ -44,23 +44,30 @@ $i = 0;
 		}else{
 			$number = $_POST['number'];
 		}
+		
+
+	}
+	$username = $password = "";
+	$usernameErr = $passwordErr = "";
+	$a = 0;
+	if (isset($_POST['loginsend'])|| isset($_POST['loginupdate'])) {
+		$_SESSION['post_data'] = $_POST;
 		if (empty($_POST['username'])) {
-			$i++;
+			$a++;
 			$_SESSION['usernameErr'] = "This field must be filled";
 		}else{
 			$username = $_POST['username'];
 		}
 		if (!preg_match('/^[A-Za-z ]*$/', $username)) {
-			$i++;
+			$a++;
 			$_SESSION['usernameErr'] = "Sorry,Not a valid username. Try another one.";
 		}
 		if (empty($_POST['password'])) {
-			$i++;
+			$a++;
 			$_SESSION['passwordErr'] = "You cannot leave it blank";
 		}else{
 			$password = $_POST['password'];
 		}
-
 	}
 
 
@@ -113,32 +120,57 @@ $i = 0;
 		mysqli_query($con, $query);
 		header("location:Practice.php?msg=2");
 	}
-	if (isset($_POST['loginsend'])){
+	
+}else{
+	if (isset($_POST['send'])) {
+		header("location:practice.php?msg=3");
+	}else if(isset($_POST['update'])){
+		header("location:edit.php?msg=3");
+	}
+}
+	if ($a == 0) {
+		
+		if (isset($_POST['loginsend'])){
 		$username = mysqli_real_escape_string($con, $_POST['username']);
 		$password = mysqli_real_escape_string($con, $_POST['password']);
 
 		$query = "INSERT into login(Username,Password)values('$username','$password')";
 		mysqli_query($con, $query);
-		header("location:Practice.php?msg=0");
+		header("location:loginshow.php");
 	}
-}else{
-	if (isset($_POST['send'])) {
-		header("location:create.php?msg=3");
-	}else if(isset($_POST['update'])){
-		header("location:edit.php?msg=3");
+	if (isset($_POST['loginupdate'])) {
+		
+		$username = mysqli_real_escape_string($con, $_POST['username']);
+		$password = mysqli_real_escape_string($con, $_POST['password']);
+		$id = mysqli_real_escape_string($con,$_POST['id']);
+
+		$query = "UPDATE login set Username = '$username', Password = '$password' WHERE id = '$id'";
+		mysqli_query($con, $query);
+		header("location:loginshow.php");
 	}
-}
+	}else{
+		header("location:loginshow.php");
+	}
+
+	
 	if (isset($_GET['delete'])) {
 		$id = $_GET['delete'];
-		
-		mysqli_query($con, "delete from guestuser where id = '$id'");
+		mysqli_query($con, "DELETE from guestuser where id = '$id'");
 		header("location:Practice.php?msg=1");
+	}
+	if (isset($_GET['del'])) {
+		$id = $_GET['del'];
+		mysqli_query($con, "DELETE from login where id = '$id'");
+		header("location:loginshow.php?msg=1");
 	}
 	if (isset($_GET['edit'])) {
 		$id = $_GET['edit'];
 		header("location:edit.php?id=".$id);
 	}
-
+	if (isset($_GET['loginedit'])) {
+		$id = $_GET['loginedit'];
+		header("location:editLogin.php?id=".$id);
+	}
 	if (isset($_POST['deleteSelected'])) {
 		$checkbox = $_POST['checkbox'];
 		for ($i=0; $i <count($checkbox) ; $i++) { 

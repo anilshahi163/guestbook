@@ -11,7 +11,8 @@
 		$status = mysqli_real_escape_string($con,$record['status']);
 		$id = mysqli_real_escape_string($con,$record['id']);
 	}
-
+	 
+						
  ?>
 
 
@@ -109,7 +110,6 @@
 		else if ($type == "2") {
 			$_GET['msg'] = "Successfully updated...";
 			$color = "green";
-			session_destroy();
 		}
 		else if ($type == "3") {
 			$_GET['msg'] = "Error...";
@@ -124,7 +124,7 @@
 
  
  <?php } ?>
-<?php unset($_SESSION['post_data']); ?>
+
 		
 	</head>
   
@@ -135,13 +135,13 @@
 			<h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
 		  
 			<!-- Logo (221px wide) -->
-			<a href="#"><img id="logo" src="assets/img/AnchorLogo.png" alt="Simpla Admin logo" /></a>
+			<a href="#"><img id="logo" src="assets/Images/icons/AnchorLogo.png" Style = "height:100px;margin:60px" alt="Simpla Admin logo" /></a>
 		  
 			<!-- Sidebar Profile links -->
 			<div id="profile-links">
 				Hello, <a href="#" title="Edit your profile"><?php echo $_SESSION['username']; ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
 				<br />
-				<a href="#" title="View the Site">View the Site</a> | <a href="#" title="Sign Out">Sign Out</a>
+				<a href="#" title="View the Site">View the Site</a> | <a href="logout.php?msg=2" title="Sign Out">Sign Out</a>
 			</div>        
 			
 			<ul id="main-nav">  <!-- Accordion Menu -->
@@ -277,29 +277,34 @@
 			<ul class="shortcut-buttons-set">
 				
 				<li><a class="shortcut-button" href="#"><span>
-					<img src="assets/img/pencil_48.png" alt="icon" /><br />
+					<img src="assets/Images/icons/pencil_48.png" alt="icon" /><br />
 					Write an Article
 				</span></a></li>
 				
 				<li><a class="shortcut-button" href="#"><span>
-					<img src="assets/img/paper_content_pencil_48.png" alt="icon" /><br />
+					<img src="assets/Images/icons/paper_content_pencil_48.png" alt="icon" /><br />
 					Create a New Page
 				</span></a></li>
 				
 				<li><a class="shortcut-button" href="#"><span>
-					<img src="assets/img/image_add_48.png" alt="icon" /><br />
+					<img src="assets/Images/icons/image_add_48.png" alt="icon" /><br />
 					Upload an Image
 				</span></a></li>
 				
 				<li><a class="shortcut-button" href="#"><span>
-					<img src="assets/img/clock_48.png" alt="icon" /><br />
+					<img src="assets/Images/icons/clock_48.png" alt="icon" /><br />
 					Add an Event
 				</span></a></li>
 				
 				<li><a class="shortcut-button" href="#messages" rel="modal"><span>
-					<img src="assets/img/comment_48.png" alt="icon" /><br />
+					<img src="assets/Images/icons/comment_48.png" alt="icon" /><br />
 					Open Modal
 				</span></a></li>
+
+				<li><a class="shortcut-button" href="loginshow.php"><span>
+							<img src="assets/Images/icons/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
+							See Users
+						</span></a></li>
 				
 			</ul><!-- End .shortcut-buttons-set -->
 			
@@ -448,9 +453,11 @@
 							<div class="clear"></div>End .clear
 							
 						</form> -->
+						
+						
 						<form class = "form-horizontal" method = "post" action = "server.php">
 	<fieldset>
-	
+	<input type = "hidden" name = "id" value = "<?php echo $id; ?>">
 	<div class = "form-group">
 	<label for = "name">Name</label>
 	<div class = "col-sm-10">
@@ -475,6 +482,14 @@
 	<input type = "text" class="text-input small-input" name = "number" class = "form-control" placeholder = "Enter your number here" value = "<?php echo isset($_SESSION['post_data']['number'])? $_SESSION['post_data']['number'] : $number; ?>">
 	<span style = "color:red"><p><?php echo isset($_SESSION['numberErr'])?$_SESSION['numberErr']:'' ?></p></span>
 	</div></div>
+	<?php session_unset('nameErr');
+
+								session_unset('addressErr');
+								session_unset('emailErr');
+								session_unset('numberErr');
+								
+
+						 ?>
 	<div class = "form-group">
 		<label for = "status">Status</label>
 			<div class = "col-sm-10">

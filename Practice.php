@@ -12,7 +12,7 @@ include("server.php"); ?>
 	<title>Simpla Admin</title>
 
 	<?php include("Scripts.php"); ?>
-			<!-- Internet Explorer .png-fix -->
+	<!-- Internet Explorer .png-fix -->
 
 		<!--[if IE 6]>
 			<script type="text/javascript" src="resources/scripts/DD_belatedPNG_0.0.7a.js"></script>
@@ -47,7 +47,7 @@ include("server.php"); ?>
 				else if ($type == "2") {
 					$_GET['msg'] = "Successfully updated...";
 					$color = "green";
-					session_destroy();
+					 session_destroy();
 				}
 				else if ($type == "3") {
 					$_GET['msg'] = "Error...";
@@ -62,6 +62,7 @@ include("server.php"); ?>
 
 
 				<?php } ?>
+
 				<?php unset($_SESSION['post_data']); ?>
 
 			</head>
@@ -73,7 +74,7 @@ include("server.php"); ?>
 					<h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
 
 					<!-- Logo (221px wide) -->
-					<a href="#"><img id="logo" src="assets/img/AnchorLogo.png" alt="Simpla Admin logo" /></a>
+					<a href="#"><img id="logo" src="assets/Images/icons/AnchorLogo.png" Style = "height:100px;margin:60px" alt="Simpla Admin logo" /></a>
 
 					<!-- Sidebar Profile links -->
 					<div id="profile-links">
@@ -215,32 +216,32 @@ include("server.php"); ?>
 					<ul class="shortcut-buttons-set">
 
 						<li><a class="shortcut-button" href="#"><span>
-							<img src="assets/img/pencil_48.png" alt="icon" /><br />
+							<img src="assets/Images/icons/pencil_48.png" alt="icon" /><br />
 							Write an Article
 						</span></a></li>
 
 						<li><a class="shortcut-button" href="#"><span>
-							<img src="assets/img/paper_content_pencil_48.png" alt="icon" /><br />
+							<img src="assets/Images/icons/paper_content_pencil_48.png" alt="icon" /><br />
 							Create a New Page
 						</span></a></li>
 
 						<li><a class="shortcut-button" href="#"><span>
-							<img src="assets/img/image_add_48.png" alt="icon" /><br />
+							<img src="assets/Images/icons/image_add_48.png" alt="icon" /><br />
 							Upload an Image
 						</span></a></li>
 
 						<li><a class="shortcut-button" href="#"><span>
-							<img src="assets/img/clock_48.png" alt="icon" /><br />
+							<img src="assets/Images/icons/clock_48.png" alt="icon" /><br />
 							Add an Event
 						</span></a></li>
 
 						<li><a class="shortcut-button" href="#messages" rel="modal"><span>
-							<img src="assets/img/comment_48.png" alt="icon" /><br />
+							<img src="assets/Images/icons/comment_48.png" alt="icon" /><br />
 							Open Modal
 						</span></a></li>
 
 						<li><a class="shortcut-button" href="loginshow.php"><span>
-							<img src="assets/img/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
+							<img src="assets/Images/icons/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
 							See Users
 						</span></a></li>
 
@@ -267,25 +268,25 @@ include("server.php"); ?>
 
 							<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
 								<div class="notification success png_bg">
-									<a href="#" class="close"><img src="assets/img/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" title="Close this notification" alt="close" /></a>
 									<div class = "msg">
- 	<?php   
- 		if ($color == "green"){ ?>
- 		
-  <strong><?php echo $_GET['msg']; ?></strong>
+										<?php   
+										if ($color == "green"){ ?>
 
- 	
- 	<?php	
- 	}else{ ?>
-		 	
-  <strong><?php echo $_GET['msg']; ?></strong>
-		<?php }
-		?>
+										<strong><?php echo $_GET['msg']; ?></strong>
 
- </div>
+
+										<?php	
+									}else{ ?>
+
+									<strong><?php echo $_GET['msg']; ?></strong>
+									<?php }
+									?>
+
 								</div>
-								<form method = "post" action = "server.php">
-								<table>
+							</div>
+							<form method = "post" action = "server.php">
+								<table id = "myTable">
 
 									<thead>
 										<tr>
@@ -312,7 +313,7 @@ include("server.php"); ?>
 													<a class="button" href="#">Apply to selected</a>
 												</div>
 
-												<div class="pagination align-right">
+												<div class="pagination align-right" style = "display:none">
 													<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
 													<a href="#" class="number" title="1">1</a>
 													<a href="#" class="number" title="2">2</a>
@@ -338,8 +339,8 @@ include("server.php"); ?>
 												<td><?php echo $row['email']; ?></td>
 												<td><?php echo $row['Mobile_number']; ?></td>
 												<td><?php if($row['status']){ echo 'Active'; }else{ echo 'Inactive'; } ?></td>
-												<td><a class = "btn btn-danger" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/img/cross.png"></a>
-													<a class = "btn btn-info" title = "Edit" href = "server.php?edit=<?php echo $row['id']; ?>"><img src="assets/img/pencil.png"></button></a></td>
+												<td><a class = "btn btn-danger" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/Images/cross.png"></a>
+													<a class = "btn btn-info" title = "Edit" href = "server.php?edit=<?php echo $row['id']; ?>"><img src="assets/Images/pencil.png"></button></a></td>
 
 
 												</tr>
@@ -371,6 +372,9 @@ $(document).ready(function() {
 	$('#myModal').on('show.bs.modal', function(e) {
 		var id = $(e.relatedTarget).data('id');
 		$('#modalDelete').attr('href', 'server.php?delete=' + id);
+	});
+	$(document).ready(function(){
+		$('#myTable').DataTable();
 	});
 });
 
@@ -448,25 +452,25 @@ $(document).ready(function() {
 								<div class = "form-group">
 									<label for = "name">Name</label>
 									<div class = "col-sm-10">
-										<input type = "text" class="text-input small-input" name = "name" class = "form-control" placeholder = "Enter your name here" value="<?php echo isset($_SESSION['post_data']['name'])? $_SESSION['post_data']['name'] : ''; ?>">
+										<input type = "text" class="text-input small-input" name = "name" class = "form-control" placeholder = "Enter your name here" value="<?php echo isset($_SESSION['post_data']['name'])? $_SESSION['post_data']['name'] : $name; ?>">
 										<span style = "color:red"><p><?php echo isset($_SESSION['nameErr'])?$_SESSION['nameErr']:'' ?></p></span>
 									</div></div>
 									<div class = "form-group">
 										<label for = "address">Address</label>
 										<div class = "col-sm-10">
-											<input type = "text" class="text-input small-input" name = "address" class = "form-control" placeholder = "Enter your address here" value = "<?php echo isset($_SESSION['post_data']['address'])? $_SESSION['post_data']['address'] : ''; ?>">
+											<input type = "text" class="text-input small-input" name = "address" class = "form-control" placeholder = "Enter your address here" value = "<?php echo isset($_SESSION['post_data']['address'])? $_SESSION['post_data']['address'] : $address; ?>">
 											<span style = "color:red"><p><?php echo isset($_SESSION['addressErr'])?$_SESSION['addressErr']:'' ?></p></span>
 										</div></div>
 										<div class = "form-group">
 											<label for = "email">Email</label>
 											<div class = "col-sm-10">
-												<input type = "text" class="text-input small-input" name = "email" class = "form-control" placeholder = "Enter your email here" value = "<?php echo isset($_SESSION['post_data']['email'])? $_SESSION['post_data']['email'] : ''; ?>">
+												<input type = "text" class="text-input small-input" name = "email" class = "form-control" placeholder = "Enter your email here" value = "<?php echo isset($_SESSION['post_data']['email'])? $_SESSION['post_data']['email'] : $email; ?>">
 												<span style = "color:red"><p><?php echo isset($_SESSION['emailErr'])?$_SESSION['emailErr']:'' ?></p></span>
 											</div></div>
 											<div class = "form-group">
 												<label for = "Mobile_number">Mobile Number</label>
 												<div class = "col-sm-10">
-													<input type = "text" class="text-input small-input" name = "number" class = "form-control" placeholder = "Enter your number here" value = "<?php echo isset($_SESSION['post_data']['number'])? $_SESSION['post_data']['number'] : ''; ?>">
+													<input type = "text" class="text-input small-input" name = "number" class = "form-control" placeholder = "Enter your number here" value = "<?php echo isset($_SESSION['post_data']['number'])? $_SESSION['post_data']['number'] : $number; ?>">
 													<span style = "color:red"><p><?php echo isset($_SESSION['numberErr'])?$_SESSION['numberErr']:'' ?></p></span>
 												</div></div>
 												<div class = "form-group">

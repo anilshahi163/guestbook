@@ -1,8 +1,21 @@
+<?php include("server.php");
+if (isset($_GET['id'])) {
+	$id = $_GET['id'];
+	$rec = mysqli_query($con, "SELECT * from login where id = '$id'");
+	$record = mysqli_fetch_array($rec);
+	$username = mysqli_real_escape_string($con,$record['Username']);
+	
+	$password = mysqli_real_escape_string($con,$record['Password']);
+	$id = mysqli_real_escape_string($con,$record['id']);
+}
+
+?>
+
+
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<?php
-include("server.php"); ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -11,8 +24,57 @@ include("server.php"); ?>
 
 	<title>Simpla Admin</title>
 
-	<?php include("Scripts.php"); ?>
-	<!-- Internet Explorer .png-fix -->
+	<!--                       CSS                       -->
+
+	<!-- Reset Stylesheet -->
+	<link rel="stylesheet" href="assets/css/reset.css" type="text/css" media="screen" />
+
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen" />
+
+	<!-- Invalid Stylesheet. This makes stuff look pretty. Remove it if you want the CSS completely valid -->
+	<link rel="stylesheet" href="assets/css/invalid.css" type="text/css" media="screen" />	
+
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
+		<!-- Colour Schemes
+	  
+		Default colour scheme is green. Uncomment prefered stylesheet to use it.
+		
+		<link rel="stylesheet" href="resources/css/blue.css" type="text/css" media="screen" />
+		
+		<link rel="stylesheet" href="resources/css/red.css" type="text/css" media="screen" />  
+	 
+	-->
+
+	<!-- Internet Explorer Fixes Stylesheet -->
+
+		<!--[if lte IE 7]>
+			<link rel="stylesheet" href="resources/css/ie.css" type="text/css" media="screen" />
+			<![endif]-->
+
+			<!--                       Javascripts                       -->
+
+			<!-- jQuery -->
+			<script type="text/javascript" src="assets/js/jquery-1.3.2.min.js"></script>
+
+			<!-- jQuery Configuration -->
+			<script type="text/javascript" src="assets/js/simpla.jquery.configuration.js"></script>
+
+			<!-- Facebox jQuery Plugin -->
+			<script type="text/javascript" src="assets/js/facebox.js"></script>
+
+			<!-- jQuery WYSIWYG Plugin -->
+			<script type="text/javascript" src="assets/js/jquery.wysiwyg.js"></script>
+
+			<!-- jQuery Datepicker Plugin -->
+			<script type="text/javascript" src="assets/js/jquery.datePicker.js"></script>
+			<script type="text/javascript" src="assets/js/jquery.date.js"></script>
+			<script type="text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+			<!--[if IE]><script type="text/javascript" src="resources/scripts/jquery.bgiframe.js"></script><![endif]-->
+
+
+			<!-- Internet Explorer .png-fix -->
 
 		<!--[if IE 6]>
 			<script type="text/javascript" src="resources/scripts/DD_belatedPNG_0.0.7a.js"></script>
@@ -54,7 +116,7 @@ include("server.php"); ?>
 					$color = "red";
 				}
 				else if ($type == "6") {
-					$_GET['msg'] = "Successfully Logged In";
+					$_GET['msg'] = "Welcome " .$_SESSION['username'];
 					$color = "green";
 				}
 
@@ -73,13 +135,13 @@ include("server.php"); ?>
 					<h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
 
 					<!-- Logo (221px wide) -->
-					<a href="#"><img id="logo" src="assets/Images/icons/AnchorLogo.png" alt="Simpla Admin logo" /></a>
+					<a href="#"><img id="logo" src="assets/Images/icons/AnchorLogo.png" Style = "height:100px;margin:60px" alt="Simpla Admin logo" /></a>
 
 					<!-- Sidebar Profile links -->
 					<div id="profile-links">
 						Hello, <a href="#" title="Edit your profile"><?php echo $_SESSION['username']; ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
 						<br />
-						<a href="Practice.php?msg=6" title="View the Site">Back to homepage</a> | <a href="logout.php" title="Sign Out">Sign Out</a>
+						<a href="#" title="View the Site">View the Site</a> | <a href="logout.php" title="Sign Out">Sign Out</a>
 					</div>        
 
 					<ul id="main-nav">  <!-- Accordion Menu -->
@@ -155,13 +217,13 @@ include("server.php"); ?>
 
 						<p>
 							<strong>17th May 2009</strong> by Admin<br />
-							Hi Mr. Binod Lamsal. Glad to meet you sir.
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue.
 							<small><a href="#" class="remove-link" title="Remove message">Remove</a></small>
 						</p>
 
 						<p>
 							<strong>2nd May 2009</strong> by Jane Doe<br />
-							And I got some session problems and i will fix it.
+							Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.
 							<small><a href="#" class="remove-link" title="Remove message">Remove</a></small>
 						</p>
 
@@ -239,7 +301,7 @@ include("server.php"); ?>
 							Open Modal
 						</span></a></li>
 
-						<li><a class="shortcut-button" href="#"><span>
+						<li><a class="shortcut-button" href="loginshow.php"><span>
 							<img src="assets/Images/icons/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
 							See Users
 						</span></a></li>
@@ -252,11 +314,11 @@ include("server.php"); ?>
 
 						<div class="content-box-header">
 
-							<h3>Guestbook Table</h3>
+							<h3>Update Form</h3>
 
 							<ul class="content-box-tabs">
-								<li><a href="#tab1" class="default-tab">Table</a></li> <!-- href must be unique and match the id of target div -->
-								<li><a href="#tab2">Forms</a></li>
+								<li><a href="#tab1">Table</a></li> <!-- href must be unique and match the id of target div -->
+								<li><a href="#tab2" class="default-tab">Forms</a></li>
 							</ul>
 
 							<div class="clear"></div>
@@ -265,19 +327,19 @@ include("server.php"); ?>
 
 						<div class="content-box-content">
 
-							<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
-								<div class="notification success png_bg">
-									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-									<p style = "font:Arial;font-size:18px;text-align:center">Here are the list of users who can have access to the Guestbook.</p>
-							</div>
-							<form method = "post" action = "server.php">
+							<div class="tab-content" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
+
 								<table>
 
 									<thead>
 										<tr>
 											<th>Select all <input type = "checkbox" id = "parent"><input type = "submit" name = "deleteSelected" class = "btn btn-danger" value = "Delete Selected"></th>
-											<th>Username</th>
-											<th>Password</th>
+											<th>Name</th>
+											<th>Address</th>
+											<th>Email</th>
+											<th>Mobile number</th>
+											<th>Status</th>
+											<th>Action</th>
 										</tr>
 
 									</thead>
@@ -294,7 +356,7 @@ include("server.php"); ?>
 													<a class="button" href="#">Apply to selected</a>
 												</div>
 
-												<div class="pagination align-right">
+												<div class="pagination">
 													<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
 													<a href="#" class="number" title="1">1</a>
 													<a href="#" class="number" title="2">2</a>
@@ -319,7 +381,7 @@ include("server.php"); ?>
 												<td><?php echo $row['Password']; ?></td>
 												
 												<td><a class = "btn btn-danger" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/Images/cross.png"></a>
-													<a class = "btn btn-info" title = "Edit" href = "server.php?loginedit=<?php echo $row['id']; ?>"><img src="assets/Images/pencil.png"></button></a></td>
+													<a class = "btn btn-info" title = "Edit" href = "server.php?edit=<?php echo $row['id']; ?>"><img src="assets/Images/pencil.png"></button></a></td>
 
 
 												</tr>
@@ -327,44 +389,13 @@ include("server.php"); ?>
 											}
 											?>
 										</tbody>
-										<!-- Modal -->
-										<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<div class="modal-header">
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
--->        <h4 class="modal-title" id="myModalLabel">Deleting an account.</h4>
-</div>
-<div class="modal-body">
-	Are you sure you want to delete this user from the list?
-</div>
-<div class="modal-footer">
-	<a class="btn btn-default" data-dismiss="modal">No</a>
-	<a class="btn btn-primary" id = "modalDelete" href ="server.php?del=<?php echo $row['id']; ?>">Yes. Delete this</a>
-</div>
-</div>
-</div>
-</div> 
 
-<script type="text/javascript">
-$(document).ready(function() {
-	$('#myModal').on('show.bs.modal', function(e) {
-		var id = $(e.relatedTarget).data('id');
-		$('#modalDelete').attr('href', 'server.php?del=' + id);
-	});
-});
-
-// setTimeout(function(){ jQuery('.msg').fadeOut("slow") }, 3000);
-
-</script>
+									</table>
 
 
-</table>
-</form>
+								</div> <!-- End #tab1 -->
 
-</div> <!-- End #tab1 -->
-
-<div class="tab-content" id="tab2">
+								<div class="tab-content default-tab" id="tab2">
 
 						<!-- <form action="" method="post">
 							
@@ -423,50 +454,48 @@ $(document).ready(function() {
 						</form> -->
 						<form class = "form-horizontal" method = "post" action = "server.php">
 							<fieldset>
-								<legend><h3>Add a User</h3></legend>
-
+								<input type = "hidden" name = "id" value = "<?php echo $id; ?>">
 								<div class = "form-group">
 									<label for = "name">Username</label>
 									<div class = "col-sm-10">
-										<input type = "text" class="text-input small-input" name = "username" class = "form-control" placeholder = "Enter your username here">
+										<input type = "text" class="text-input small-input" name = "username" class = "form-control" placeholder = "Enter your username here" value="<?php echo isset($_SESSION['post_data']['username'])? $_SESSION['post_data']['username'] : $username; ?>">
 										<span style = "color:red"><p><?php echo isset($_SESSION['usernameErr'])?$_SESSION['usernameErr']:'' ?></p></span>
 									</div></div>
 									<div class = "form-group">
 										<label for = "address">Password</label>
 										<div class = "col-sm-10">
-											<input type = "text" class="text-input small-input" name = "password" class = "form-control" placeholder = "Enter your password here">
+											<input type = "text" class="text-input small-input" name = "password" class = "form-control" placeholder = "Enter your password here" value = "<?php echo isset($_SESSION['post_data']['password'])? $_SESSION['post_data']['password'] : $password; ?>">
 											<span style = "color:red"><p><?php echo isset($_SESSION['passwordErr'])?$_SESSION['passwordErr']:'' ?></p></span>
 										</div></div>
 										
-										<div class = "form-group">
-											<div class = "col-sm-offset-2 col-sm-10">
-												<input type = "submit" class = "button" value = "send" name = "loginsend">
-											</div>
-										</div>
+												<div class = "form-group">
+													<div class = "col-sm-offset-2 col-sm-10">
+														<input type = "submit" class = "button" value = "Update" name = "loginupdate">
+													</div>
+												</div>
 
 
 
-									</fieldset>
-								</form>
+											</fieldset>
+										</form>
 
-							</div> <!-- End #tab2 -->        
+									</div> <!-- End #tab2 -->        
 
-						</div> <!-- End .content-box-content -->
+								</div> <!-- End .content-box-content -->
 
-					</div> <!-- End .content-box -->
-
-
+							</div> <!-- End .content-box -->
 
 
 
-					<div id="footer">
-						<small> <!-- Remove this notice or replace it with whatever you want -->
-							&#169; Copyright 2009 Your Company | Powered by <a href="http://themeforest.net/item/simpla-admin-flexible-user-friendly-admin-skin/46073">Simpla Admin</a> | <a href="#">Top</a>
-						</small>
-					</div><!-- End #footer -->
 
-				</div> <!-- End #main-content -->
 
-			</div></body>
+							<div id="footer">
+								<small> <!-- Remove this notice or replace it with whatever you want -->
+									&#169; Copyright 2009 Your Company | Powered by <a href="http://themeforest.net/item/simpla-admin-flexible-user-friendly-admin-skin/46073">Simpla Admin</a> | <a href="#">Top</a>
+								</small>
+							</div><!-- End #footer -->
 
-			</html>
+						</div> <!-- End #main-content -->
+					</div></body>
+
+					</html>
