@@ -109,7 +109,6 @@ if (isset($_GET['id'])) {
 				else if ($type == "2") {
 					$_GET['msg'] = "Successfully updated...";
 					$color = "green";
-					session_destroy();
 				}
 				else if ($type == "3") {
 					$_GET['msg'] = "Error...";
@@ -139,75 +138,24 @@ if (isset($_GET['id'])) {
 
 					<!-- Sidebar Profile links -->
 					<div id="profile-links">
-						Hello, <a href="#" title="Edit your profile"><?php echo $_SESSION['username']; ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
+						Hello, <a href="#" title="Edit your profile"><?php if(isset($_SESSION['logged_username'])){ echo $_SESSION['logged_username']; } ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
 						<br />
 						<a href="#" title="View the Site">View the Site</a> | <a href="logout.php" title="Sign Out">Sign Out</a>
 					</div>        
 
 					<ul id="main-nav">  <!-- Accordion Menu -->
 
-						<li>
-							<a href="http://www.google.com" class="nav-top-item no-submenu"> <!-- Add the class "no-submenu" to menu items with no sub menu -->
-								Dashboard
-							</a>       
-						</li>
-
 						<li> 
-							<a href="#" class="nav-top-item current"> <!-- Add the class "current" to current menu item -->
-								Articles
+							<a href="#" class="nav-top-item"> <!-- Add the class "current" to current menu item -->
+								Guestbook Transactions
 							</a>
 							<ul>
-								<li><a href="#">Write a new Article</a></li>
-								<li><a class="current" href="#">Manage Articles</a></li> <!-- Add class "current" to sub menu items also -->
-								<li><a href="#">Manage Comments</a></li>
-								<li><a href="#">Manage Categories</a></li>
+								<li><a href="#">Create New users.</a></li>
+								<li><a class="current" href="Practice.php?msg=6">Show users of guestbook</a></li> <!-- Add class "current" to sub menu items also -->
+								<li><a href="#">Create new login User</a></li>
+								<li><a href="loginshow.php">Show login users.</a></li>
 							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Pages
-							</a>
-							<ul>
-								<li><a href="#">Create a new Page</a></li>
-								<li><a href="#">Manage Pages</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Image Gallery
-							</a>
-							<ul>
-								<li><a href="#">Upload Images</a></li>
-								<li><a href="#">Manage Galleries</a></li>
-								<li><a href="#">Manage Albums</a></li>
-								<li><a href="#">Gallery Settings</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Events Calendar
-							</a>
-							<ul>
-								<li><a href="#">Calendar Overview</a></li>
-								<li><a href="#">Add a new Event</a></li>
-								<li><a href="#">Calendar Settings</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Settings
-							</a>
-							<ul>
-								<li><a href="#">General</a></li>
-								<li><a href="#">Design</a></li>
-								<li><a href="#">Your Profile</a></li>
-								<li><a href="#">Users and Permissions</a></li>
-							</ul>
-						</li>      
+						</li>     
 
 					</ul> <!-- End #main-nav -->
 
@@ -271,7 +219,7 @@ if (isset($_GET['id'])) {
 					</noscript>
 
 					<!-- Page Head -->
-					<h2>Welcome <?php echo $_SESSION['username']; ?></h2>
+					<h2>Welcome <?php if(isset($_SESSION['logged_username'])){ echo $_SESSION['logged_username']; } ?></h2>
 					<p id="page-intro">What would you like to do?</p>
 
 					<ul class="shortcut-buttons-set">

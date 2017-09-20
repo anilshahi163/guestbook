@@ -57,7 +57,7 @@
 <div class = "form-group">
 <label for = "Username">Username</label>
 <input type = "text" class = "form-control" name = "username" placeholder = "Enter your username here.">
-<small class = "form-text text-muted">Remember, First letter should be capital.</small>
+<small class = "form-text text-muted">All letters should be small</small>
 </div>
 
 <div class = "form-group">

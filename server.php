@@ -78,7 +78,9 @@ $i = 0;
 	if (isset($_POST['login'])) {
 	$username = mysqli_real_escape_string($con,$_POST['username']);
 	$password = mysqli_real_escape_string($con,$_POST['password']);
-	$query = "SELECT * from login where Username = '$username' AND Password = '$password'";
+     $encrypted = md5($password);
+     
+	$query = "SELECT * from login where Username = '$username' AND Password = '$encrypted'";
 	$result1 = mysqli_query($con, $query);
 	$row = mysqli_fetch_array($result1);
 	
@@ -86,7 +88,7 @@ $i = 0;
 	// var_dump($row['Password']);
 	// var_dump($username);
 	// var_dump($password);die;
-	if ($row['Username'] == $username && $row['Password'] == $password && !empty($username) && !empty($password)) {
+	if ($row['Username'] == $username && $row['Password'] == $encrypted && !empty($username) && !empty($password)) {
 		$_SESSION['logged_username'] = $username;
 		header("location:Practice.php?msg=6");
 	}else{
@@ -134,11 +136,11 @@ $i = 0;
 		
 		if (isset($_POST['loginsend'])){
 		$username = mysqli_real_escape_string($con, $_POST['username']);
-		$password = mysqli_real_escape_string($con, $_POST['password']);
+		$password = mysqli_real_escape_string($con, md5($_POST['password']));
 
 		$query = "INSERT into login(Username,Password)values('$username','$password')";
 		mysqli_query($con, $query);
-		header("location:loginshow.php");
+		header("location:loginshow.php?msg=0");
 	}
 	if (isset($_POST['loginupdate'])) {
 		
@@ -148,7 +150,7 @@ $i = 0;
 
 		$query = "UPDATE login set Username = '$username', Password = '$password' WHERE id = '$id'";
 		mysqli_query($con, $query);
-		header("location:loginshow.php");
+		header("location:loginshow.php?msg=2");
 	}
 	}else{
 		header("location:loginshow.php");
@@ -174,17 +176,42 @@ $i = 0;
 		header("location:editLogin.php?id=".$id);
 	}
 	if (isset($_POST['deleteSelected'])) {
-		$checkbox = $_POST['checkbox'];
-		for ($i=0; $i <count($checkbox) ; $i++) { 
-			
-			$del_id = $checkbox[$i];
-			$sql = "Delete from guestuser where id = '$del_id'";
-			$result = mysqli_query($con, $sql);
+		if($_POST['apply_dropdown']=='option2'){
+			$checkbox = $_POST['checkbox'];
+			for ($i=0; $i <count($checkbox) ; $i++) { 
+				
+				$del_id = $checkbox[$i];
+				$sql = "Delete from guestuser where id = '$del_id'";
+				$result = mysqli_query($con, $sql);
+			}
+			if ($result) {
+				header("location:Practice.php?msg=1");
+			}else{
+				echo "Sorry, failed to delete.";
+			}
 		}
-		if ($result) {
-			header("location:Practice.php?msg=1");
-		}else{
-			echo "Sorry, failed to delete.";
+		else{
+			header("location:practice.php?msg=4");
+		}
+	}
+
+	if (isset($_POST['LogindeleteSelected'])) {
+		if($_POST['apply_dropdown']=='option2'){
+			$checkbox = $_POST['checkbox'];
+			for ($i=0; $i <count($checkbox) ; $i++) { 
+				
+				$del_id = $checkbox[$i];
+				$sql = "Delete from login where id = '$del_id'";
+				$result = mysqli_query($con, $sql);
+			}
+			if ($result) {
+				header("location:loginshow.php?msg=1");
+			}else{
+				echo "Sorry, failed to delete.";
+			}
+		}
+		else{
+			header("location:loginshow.php?msg=4");
 		}
 	}
 

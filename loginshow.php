@@ -36,7 +36,11 @@ include("server.php"); ?>
 			<?php 
 			if (isset($_GET['msg'])) {
 				$type = $_GET['msg'];
-				if ($type == "0") {
+				if ($type == "") {
+					$_GET['msg'] = "Welcome";
+					$color = "green";
+				}
+				else if ($type == "0") {
 					$_GET['msg'] = "Successfully created...";
 					$color = "green";
 				}
@@ -47,10 +51,14 @@ include("server.php"); ?>
 				else if ($type == "2") {
 					$_GET['msg'] = "Successfully updated...";
 					$color = "green";
-					session_destroy();
+					
 				}
 				else if ($type == "3") {
 					$_GET['msg'] = "Error...";
+					$color = "red";
+				}
+				else if ($type == "4") {
+					$_GET['msg'] = "Error, You should choose one option.";
 					$color = "red";
 				}
 				else if ($type == "6") {
@@ -60,7 +68,10 @@ include("server.php"); ?>
 
 				?>
 
+				<script type="text/javascript">
+				setTimeout(function(){ jQuery('.msgg').fadeOut("slow") }, 3000);
 
+				</script>
 				<?php } ?>
 				<?php unset($_SESSION['post_data']); ?>
 
@@ -73,77 +84,26 @@ include("server.php"); ?>
 					<h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
 
 					<!-- Logo (221px wide) -->
-					<a href="#"><img id="logo" src="assets/Images/icons/AnchorLogo.png" alt="Simpla Admin logo" /></a>
+					<a href="#"><img id="logo" src="assets/Images/icons/AnchorLogo.png" Style = "height:100px;margin:60px" alt="Simpla Admin logo" /></a>
 
 					<!-- Sidebar Profile links -->
 					<div id="profile-links">
-						Hello, <a href="#" title="Edit your profile"><?php echo $_SESSION['username']; ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
+						Hello, <a href="#" title="Edit your profile"><?php if(isset($_SESSION['logged_username'])){ echo $_SESSION['logged_username']; } ?></a>, you have <a href="#messages" rel="modal" title="3 Messages">3 Messages</a><br />
 						<br />
 						<a href="Practice.php?msg=6" title="View the Site">Back to homepage</a> | <a href="logout.php" title="Sign Out">Sign Out</a>
 					</div>        
 
 					<ul id="main-nav">  <!-- Accordion Menu -->
 
-						<li>
-							<a href="http://www.google.com" class="nav-top-item no-submenu"> <!-- Add the class "no-submenu" to menu items with no sub menu -->
-								Dashboard
-							</a>       
-						</li>
-
 						<li> 
-							<a href="#" class="nav-top-item current"> <!-- Add the class "current" to current menu item -->
-								Articles
+							<a href="#" class="nav-top-item"> <!-- Add the class "current" to current menu item -->
+								Guestbook Transactions
 							</a>
 							<ul>
-								<li><a href="#">Write a new Article</a></li>
-								<li><a class="current" href="#">Manage Articles</a></li> <!-- Add class "current" to sub menu items also -->
-								<li><a href="#">Manage Comments</a></li>
-								<li><a href="#">Manage Categories</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Pages
-							</a>
-							<ul>
-								<li><a href="#">Create a new Page</a></li>
-								<li><a href="#">Manage Pages</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Image Gallery
-							</a>
-							<ul>
-								<li><a href="#">Upload Images</a></li>
-								<li><a href="#">Manage Galleries</a></li>
-								<li><a href="#">Manage Albums</a></li>
-								<li><a href="#">Gallery Settings</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Events Calendar
-							</a>
-							<ul>
-								<li><a href="#">Calendar Overview</a></li>
-								<li><a href="#">Add a new Event</a></li>
-								<li><a href="#">Calendar Settings</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Settings
-							</a>
-							<ul>
-								<li><a href="#">General</a></li>
-								<li><a href="#">Design</a></li>
-								<li><a href="#">Your Profile</a></li>
-								<li><a href="#">Users and Permissions</a></li>
+								<li><a class = "create-new-user" href="Practice.php?msg=">Create New users.</a></li>
+								<li><a class="current" href="Practice.php?msg=">Show users of guestbook</a></li> <!-- Add class "current" to sub menu items also -->
+								<li><a class = "create-login-user" href="#">Create new login User</a></li>
+								<li><a href="loginshow.php?msg=">Show login users.</a></li>
 							</ul>
 						</li>      
 
@@ -209,7 +169,7 @@ include("server.php"); ?>
 					</noscript>
 
 					<!-- Page Head -->
-					<h2>Welcome <?php echo $_SESSION['username']; ?></h2>
+					<h2>Welcome <?php if(isset($_SESSION['logged_username'])){ echo $_SESSION['logged_username']; } ?></h2>
 					<p id="page-intro">What would you like to do?</p>
 
 					<ul class="shortcut-buttons-set">
@@ -270,14 +230,36 @@ include("server.php"); ?>
 									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" title="Close this notification" alt="close" /></a>
 									<p style = "font:Arial;font-size:18px;text-align:center">Here are the list of users who can have access to the Guestbook.</p>
 							</div>
+							<div class="notification msgg png_bg" style = "border:none">
+									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" style = "display:none" title="Close this notification" alt="close" /></a>
+									<div class = "msg">
+										<?php   
+										if ($color == "green"){ ?>
+										<div class="notification success png_bg">
+									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+										<strong><?php echo $_GET['msg']; ?></strong>
+									</div>
+
+										<?php	
+									}else{ ?>
+									<div class="notification error png_bg">
+									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+									<strong><?php echo $_GET['msg']; ?></strong>
+								</div>
+									<?php }
+									?>
+
+								</div>
+							</div>
 							<form method = "post" action = "server.php">
 								<table>
 
 									<thead>
 										<tr>
-											<th>Select all <input type = "checkbox" id = "parent"><input type = "submit" name = "deleteSelected" class = "btn btn-danger" value = "Delete Selected"></th>
+											<th>Select all <input type = "checkbox" id = "parent"></th>
 											<th>Username</th>
 											<th>Password</th>
+											<th>Choose an action</th>
 										</tr>
 
 									</thead>
@@ -286,12 +268,11 @@ include("server.php"); ?>
 										<tr>
 											<td colspan="6">
 												<div class="bulk-actions align-left">
-													<select name="dropdown">
+													<select name="apply_dropdown">
 														<option value="option1">Choose an action...</option>
-														<option value="option2">Edit</option>
-														<option value="option3">Delete</option>
+														<option value="option2" class = "deleteSelected">Delete</option>
 													</select>
-													<a class="button" href="#">Apply to selected</a>
+													<input class="button" type = "submit" value = "Apply to selected" name = "LogindeleteSelected">
 												</div>
 
 												<div class="pagination align-right">
@@ -318,8 +299,9 @@ include("server.php"); ?>
 												<td><?php echo $row['Username']; ?></td>
 												<td><?php echo $row['Password']; ?></td>
 												
-												<td><a class = "btn btn-danger" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/Images/cross.png"></a>
-													<a class = "btn btn-info" title = "Edit" href = "server.php?loginedit=<?php echo $row['id']; ?>"><img src="assets/Images/pencil.png"></button></a></td>
+												<td><a class = "btn" title = "Edit" href = "server.php?loginedit=<?php echo $row['id']; ?>"><img src="assets/Images/pencil.png"></button></a>
+													<a class = "btn" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/Images/cross.png"></a>
+													</td>
 
 
 												</tr>
@@ -351,6 +333,10 @@ $(document).ready(function() {
 	$('#myModal').on('show.bs.modal', function(e) {
 		var id = $(e.relatedTarget).data('id');
 		$('#modalDelete').attr('href', 'server.php?del=' + id);
+	});
+	
+	$('.create-login-user').click(function(){
+		jQuery( ".content-box-tabs li:nth-child(2) a" ).trigger('click');
 	});
 });
 
@@ -432,9 +418,9 @@ $(document).ready(function() {
 										<span style = "color:red"><p><?php echo isset($_SESSION['usernameErr'])?$_SESSION['usernameErr']:'' ?></p></span>
 									</div></div>
 									<div class = "form-group">
-										<label for = "address">Password</label>
+										<label for = "password">Password</label>
 										<div class = "col-sm-10">
-											<input type = "text" class="text-input small-input" name = "password" class = "form-control" placeholder = "Enter your password here">
+											<input type = "password" class="text-input small-input" name = "password" class = "form-control" placeholder = "Enter your password here">
 											<span style = "color:red"><p><?php echo isset($_SESSION['passwordErr'])?$_SESSION['passwordErr']:'' ?></p></span>
 										</div></div>
 										

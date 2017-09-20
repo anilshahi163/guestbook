@@ -36,7 +36,11 @@ include("server.php"); ?>
 			<?php 
 			if (isset($_GET['msg'])) {
 				$type = $_GET['msg'];
-				if ($type == "0") {
+				if ($type == "") {
+					$_GET['msg'] = "Welcome";
+					$color = "green";
+				}
+				else if ($type == "0") {
 					$_GET['msg'] = "Successfully created...";
 					$color = "green";
 				}
@@ -53,6 +57,10 @@ include("server.php"); ?>
 					$_GET['msg'] = "Error...";
 					$color = "red";
 				}
+				else if ($type == "4") {
+					$_GET['msg'] = "Error...Please select some action";
+					$color = "red";
+				}
 				else if ($type == "6") {
 					$_GET['msg'] = "Successfully Logged In";
 					$color = "green";
@@ -63,7 +71,10 @@ include("server.php"); ?>
 
 				<?php } ?>
 
-				
+				<script type="text/javascript">
+				setTimeout(function(){ jQuery('.notification').fadeOut("slow") }, 3000);
+
+				</script>
 				
 			</head>
 
@@ -85,68 +96,17 @@ include("server.php"); ?>
 
 					<ul id="main-nav">  <!-- Accordion Menu -->
 
-						<li>
-							<a href="http://www.google.com" class="nav-top-item no-submenu"> <!-- Add the class "no-submenu" to menu items with no sub menu -->
-								Dashboard
-							</a>       
-						</li>
-
 						<li> 
-							<a href="#" class="nav-top-item current"> <!-- Add the class "current" to current menu item -->
-								Articles
+							<a href="#" class="nav-top-item"> <!-- Add the class "current" to current menu item -->
+								Guestbook Transactions
 							</a>
 							<ul>
-								<li><a href="#">Write a new Article</a></li>
-								<li><a class="current" href="#">Manage Articles</a></li> <!-- Add class "current" to sub menu items also -->
-								<li><a href="#">Manage Comments</a></li>
-								<li><a href="#">Manage Categories</a></li>
+								<li><a class="create-new-user" href="#">Create New users.</a></li>
+								<li><a class="current" href="Practice.php?msg=">Show users of guestbook</a></li> <!-- Add class "current" to sub menu items also -->
+								<li><a href="loginshow.php?msg=">Create new login User</a></li>
+								<li><a href="loginshow.php?msg=">Show login users.</a></li>
 							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Pages
-							</a>
-							<ul>
-								<li><a href="#">Create a new Page</a></li>
-								<li><a href="#">Manage Pages</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Image Gallery
-							</a>
-							<ul>
-								<li><a href="#">Upload Images</a></li>
-								<li><a href="#">Manage Galleries</a></li>
-								<li><a href="#">Manage Albums</a></li>
-								<li><a href="#">Gallery Settings</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Events Calendar
-							</a>
-							<ul>
-								<li><a href="#">Calendar Overview</a></li>
-								<li><a href="#">Add a new Event</a></li>
-								<li><a href="#">Calendar Settings</a></li>
-							</ul>
-						</li>
-
-						<li>
-							<a href="#" class="nav-top-item">
-								Settings
-							</a>
-							<ul>
-								<li><a href="#">General</a></li>
-								<li><a href="#">Design</a></li>
-								<li><a href="#">Your Profile</a></li>
-								<li><a href="#">Users and Permissions</a></li>
-							</ul>
-						</li>      
+						</li>  
 
 					</ul> <!-- End #main-nav -->
 
@@ -240,7 +200,7 @@ include("server.php"); ?>
 							Open Modal
 						</span></a></li>
 
-						<li><a class="shortcut-button" href="loginshow.php"><span>
+						<li><a class="shortcut-button" href="loginshow.php?msg="><span>
 							<img src="assets/Images/icons/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
 							See Users
 						</span></a></li>
@@ -267,19 +227,22 @@ include("server.php"); ?>
 						<div class="content-box-content">
 
 							<div class="tab-content default-tab" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
-								<div class="notification success png_bg">
-									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+								<div class="notification png_bg" style = "border:none">
+									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" style = "display:none" title="Close this notification" alt="close" /></a>
 									<div class = "msg">
 										<?php   
 										if ($color == "green"){ ?>
-
+										<div class="notification success png_bg">
+									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" title="Close this notification" alt="close" /></a>
 										<strong><?php echo $_GET['msg']; ?></strong>
-
+									</div>
 
 										<?php	
 									}else{ ?>
-
+									<div class="notification error png_bg">
+									<a href="#" class="close"><img src="assets/Images/cross_grey_small.png" title="Close this notification" alt="close" /></a>
 									<strong><?php echo $_GET['msg']; ?></strong>
+								</div>
 									<?php }
 									?>
 
@@ -290,13 +253,13 @@ include("server.php"); ?>
 
 									<thead>
 										<tr>
-											<th>Select all <input type = "checkbox" id = "parent"><input type = "submit" name = "deleteSelected" class = "btn btn-danger" value = "Delete Selected"></th>
+											<th>Select all <input type = "checkbox" id = "parent"></th>
 											<th>Name</th>
 											<th>Address</th>
 											<th>Email</th>
 											<th>Mobile number</th>
 											<th>Status</th>
-											<th>Action</th>
+											<th>Select an Action</th>
 										</tr>
 
 									</thead>
@@ -305,12 +268,11 @@ include("server.php"); ?>
 										<tr>
 											<td colspan="6">
 												<div class="bulk-actions align-left">
-													<select name="dropdown">
+													<select name="apply_dropdown">
 														<option value="option1">Choose an action...</option>
-														<option value="option2">Edit</option>
-														<option value="option3">Delete</option>
+														<option value="option2" class = "deleteSelected">Delete</option>
 													</select>
-													<a class="button" href="#">Apply to selected</a>
+													<input class="button" type = "submit" value = "Apply to selected" name = "deleteSelected">
 												</div>
 
 												<div class="pagination align-right" style = "display:none">
@@ -339,9 +301,9 @@ include("server.php"); ?>
 												<td><?php echo $row['email']; ?></td>
 												<td><?php echo $row['Mobile_number']; ?></td>
 												<td><?php if($row['status']){ echo 'Active'; }else{ echo 'Inactive'; } ?></td>
-												<td><a class = "btn btn-danger" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/Images/cross.png"></a>
-													<a class = "btn btn-info" title = "Edit" href = "server.php?edit=<?php echo $row['id']; ?>"><img src="assets/Images/pencil.png"></button></a></td>
-
+												<td><a class = "btn" title = "Edit" href = "server.php?edit=<?php echo $row['id']; ?>"><img src="assets/Images/pencil.png"></button></a>
+													<a class = "btn" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/Images/cross.png"></a>
+													</td>
 
 												</tr>
 												<?php
@@ -368,6 +330,7 @@ include("server.php"); ?>
 </div> 
 
 <script type="text/javascript">
+
 $(document).ready(function() {
 	$('#myModal').on('show.bs.modal', function(e) {
 		var id = $(e.relatedTarget).data('id');
@@ -376,9 +339,22 @@ $(document).ready(function() {
 	$(document).ready(function(){
 		$('#myTable').DataTable();
 	});
+	$(document).ready(function(){
+		$('.create-new-user').click(function(){
+			jQuery( ".content-box-tabs li:nth-child(2) a" ).trigger('click');
+		});
+
+		// $('.bulk-actions .button').click(function(){
+		// 	if($('.bulk-actions select').val() == 'option2'){
+
+		// 	}
+		//});
+	});
+
+		
 });
 
-// setTimeout(function(){ jQuery('.msg').fadeOut("slow") }, 3000);
+ 
 
 </script>
 
