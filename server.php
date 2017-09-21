@@ -78,9 +78,9 @@ $i = 0;
 	if (isset($_POST['login'])) {
 	$username = mysqli_real_escape_string($con,$_POST['username']);
 	$password = mysqli_real_escape_string($con,$_POST['password']);
-     $encrypted = md5($password);
+     // $encrypted = md5($password);
      
-	$query = "SELECT * from login where Username = '$username' AND Password = '$encrypted'";
+	$query = "SELECT * from login where Username = '$username' AND Password = '$password'";
 	$result1 = mysqli_query($con, $query);
 	$row = mysqli_fetch_array($result1);
 	
