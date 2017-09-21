@@ -88,7 +88,7 @@ $i = 0;
 	// var_dump($row['Password']);
 	// var_dump($username);
 	// var_dump($password);die;
-	if ($row['Username'] == $username && $row['Password'] == $encrypted && !empty($username) && !empty($password)) {
+	if ($row['Username'] == $username && $row['Password'] == $password && !empty($username) && !empty($password)) {
 		$_SESSION['logged_username'] = $username;
 		header("location:Practice.php?msg=6");
 	}else{
