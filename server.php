@@ -78,9 +78,9 @@ $i = 0;
 	if (isset($_POST['login'])) {
 	$username = mysqli_real_escape_string($con,$_POST['username']);
 	$password = mysqli_real_escape_string($con,$_POST['password']);
-     // $encrypted = md5($password);
+     $encrypted = md5($password);
      
-	$query = "SELECT * from login where Username = '$username' AND Password = '$password'";
+	$query = "SELECT * from login where Username = '$username' AND Password = '$encrypted'";
 	$result1 = mysqli_query($con, $query);
 	$row = mysqli_fetch_array($result1);
 	
@@ -88,7 +88,7 @@ $i = 0;
 	// var_dump($row['Password']);
 	// var_dump($username);
 	// var_dump($password);die;
-	if ($row['Username'] == $username && $row['Password'] == $password && !empty($username) && !empty($password)) {
+	if ($row['Username'] == $username && $row['Password'] == $encrypted && !empty($username) && !empty($password)) {
 		$_SESSION['logged_username'] = $username;
 		header("location:Practice.php?msg=6");
 	}else{
