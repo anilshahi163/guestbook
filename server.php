@@ -145,7 +145,7 @@ $i = 0;
 	if (isset($_POST['loginupdate'])) {
 		
 		$username = mysqli_real_escape_string($con, $_POST['username']);
-		$password = mysqli_real_escape_string($con, $_POST['password']);
+		$password = mysqli_real_escape_string($con, md5($_POST['password']));
 		$id = mysqli_real_escape_string($con,$_POST['id']);
 
 		$query = "UPDATE login set Username = '$username', Password = '$password' WHERE id = '$id'";

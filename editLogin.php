@@ -98,7 +98,11 @@ if (isset($_GET['id'])) {
 			<?php 
 			if (isset($_GET['msg'])) {
 				$type = $_GET['msg'];
-				if ($type == "0") {
+				if ($type == "") {
+					$_GET['msg'] = "Welcome";
+					$color = "green";
+				}
+				else if ($type == "0") {
 					$_GET['msg'] = "Successfully created...";
 					$color = "green";
 				}
@@ -150,10 +154,10 @@ if (isset($_GET['id'])) {
 								Guestbook Transactions
 							</a>
 							<ul>
-								<li><a href="#">Create New users.</a></li>
-								<li><a class="current" href="Practice.php?msg=6">Show users of guestbook</a></li> <!-- Add class "current" to sub menu items also -->
-								<li><a href="#">Create new login User</a></li>
-								<li><a href="loginshow.php">Show login users.</a></li>
+								<li><a href="Practice.php?msg=">Create New users.</a></li>
+								<li><a class="current" href="Practice.php?msg=">Show users of guestbook</a></li> <!-- Add class "current" to sub menu items also -->
+								<li><a href="loginshow.php?msg=">Create new login User</a></li>
+								<li><a href="loginshow.php?msg=">Show login users.</a></li>
 							</ul>
 						</li>     
 
