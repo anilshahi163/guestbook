@@ -836,6 +836,9 @@ div.wysiwyg iframe { border: 0; margin: 5px 0 0 0; clear: left; width: 97.5% !im
 #myTable_filter{
         display:none !important;
 }
+#mytable_filter{
+        display:none !important;
+}
 .dataTables_paginate .previous{
             color: #57a000;
 

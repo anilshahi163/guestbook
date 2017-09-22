@@ -100,7 +100,7 @@ include("server.php"); ?>
 								Guestbook Transactions
 							</a>
 							<ul>
-								<li><a class = "create-new-user" href="Practice.php?msg=">Create New users.</a></li>
+								<li><a class = "create-new-user" href="#">Create New users.</a></li>
 								<li><a class="current" href="Practice.php?msg=">Show users of guestbook</a></li> <!-- Add class "current" to sub menu items also -->
 								<li><a class = "create-login-user" href="#">Create new login User</a></li>
 								<li><a href="loginshow.php?msg=">Show login users.</a></li>
@@ -252,7 +252,7 @@ include("server.php"); ?>
 								</div>
 							</div>
 							<form method = "post" action = "server.php">
-								<table>
+								<table id = "mytable">
 
 									<thead>
 										<tr>
@@ -266,7 +266,7 @@ include("server.php"); ?>
 
 									<tfoot>
 										<tr>
-											<td colspan="6">
+											<td>
 												<div class="bulk-actions align-left">
 													<select name="apply_dropdown">
 														<option value="option1">Choose an action...</option>
@@ -275,16 +275,19 @@ include("server.php"); ?>
 													<input class="button" type = "submit" value = "Apply to selected" name = "LogindeleteSelected">
 												</div>
 
-												<div class="pagination align-right">
+												<div class="pagination align-right" style = "display:none">
 													<a href="#" title="First Page">&laquo; First</a><a href="#" title="Previous Page">&laquo; Previous</a>
 													<a href="#" class="number" title="1">1</a>
 													<a href="#" class="number" title="2">2</a>
 													<a href="#" class="number current" title="3">3</a>
 													<a href="#" class="number" title="4">4</a>
 													<a href="#" title="Next Page">Next &raquo;</a><a href="#" title="Last Page">Last &raquo;</a>
-												</div> <!-- End .pagination -->
+												</div> 
 												<div class="clear"></div>
 											</td>
+											<td>&nbsp;</td>
+											<td>&nbsp;</td>
+											<td>&nbsp;</td>
 										</tr>
 									</tfoot>
 
@@ -334,6 +337,9 @@ $(document).ready(function() {
 		var id = $(e.relatedTarget).data('id');
 		$('#modalDelete').attr('href', 'server.php?del=' + id);
 	});
+	
+		$('#mytable').DataTable();
+	
 	
 	$('.create-login-user').click(function(){
 		jQuery( ".content-box-tabs li:nth-child(2) a" ).trigger('click');
