@@ -1,8 +1,8 @@
-<?php
+	<?php
 	session_start();
 	$name = $address = $email = $number = "";
 	$nameErr = $addressErr = $emailErr = $numberErr = "";
-$i = 0;
+	$i = 0;
 	if (isset($_POST['send']) || isset($_POST['update'])) {
 		$_SESSION['post_data'] = $_POST;	
 		if (empty($_POST['name'])) {
@@ -44,7 +44,7 @@ $i = 0;
 		}else{
 			$number = $_POST['number'];
 		}
-		
+
 
 	}
 	$username = $password = "";
@@ -71,92 +71,92 @@ $i = 0;
 	}
 
 
-	$con = mysqli_connect('localhost','root','admin','crud');
+	$con = mysqli_connect('localhost','root','','crud');
 	$result = mysqli_query($con,"SELECT * from guestuser");
 	$loginresult = mysqli_query($con, "SELECT * from login");
-	
+
 	if (isset($_POST['login'])) {
-	$username = mysqli_real_escape_string($con,$_POST['username']);
-	$password = mysqli_real_escape_string($con,$_POST['password']);
-     $encrypted = md5($password);
-     
-	$query = "SELECT * from login where Username = '$username' AND Password = '$encrypted'";
-	$result1 = mysqli_query($con, $query);
-	$row = mysqli_fetch_array($result1);
-	
-	// var_dump($row['Username']);
-	// var_dump($row['Password']);
-	// var_dump($username);
-	// var_dump($password);die;
-	if ($row['Username'] == $username && $row['Password'] == $encrypted && !empty($username) && !empty($password)) {
-		$_SESSION['logged_username'] = $username;
-		header("location:Practice.php?msg=6");
-	}else{
-		$_SESSION['logged_username'] = '';
-		header("location:index.php?msg=0");
+		$username = mysqli_real_escape_string($con,$_POST['username']);
+		$password = mysqli_real_escape_string($con,$_POST['password']);
+		$encrypted = md5($password);
+
+		$query = "SELECT * from login where Username = '$username' AND Password = '$encrypted'";
+		$result1 = mysqli_query($con, $query);
+		$row = mysqli_fetch_array($result1);
+		
+		// var_dump($row['Username']);
+		// var_dump($row['Password']);
+		// var_dump($username);
+		// var_dump($password);die;
+		if ($row['Username'] == $username && $row['Password'] == $encrypted && !empty($username) && !empty($password)) {
+			$_SESSION['logged_username'] = $username;
+			header("location:Practice.php?msg=6");
+		}else{
+			$_SESSION['logged_username'] = '';
+			header("location:index.php?msg=0");
+		}
 	}
-	}
-	
+
 
 	if ($i == 0) {
-		
-	
-	if (isset($_POST['send'])) {
-		$name = mysqli_real_escape_string($con,$_POST['name']);
-		$address = mysqli_real_escape_string($con,$_POST['address']); 
-		$email = mysqli_real_escape_string($con,$_POST['email']);
-		$number = mysqli_real_escape_string($con,$_POST['number']);
-		$status = mysqli_real_escape_string($con,$_POST['status']);
-		$query = "insert into guestuser(name,address,email,mobile_number,status)values('$name','$address','$email','$number','$status')";
-		mysqli_query($con,$query);
-		 unset($_SESSION['post_data']);
-		header("location:Practice.php?msg=0");
-	}
-	if (isset($_POST['update'])) {
-		$name = mysqli_real_escape_string($con,$_POST['name']);
-		$address = mysqli_real_escape_string($con,$_POST['address']);
-		$email = mysqli_real_escape_string($con,$_POST['email']);
-		$number = mysqli_real_escape_string($con,$_POST['number']);
-		$status = mysqli_real_escape_string($con,$_POST['status']);
-		$id = mysqli_real_escape_string($con,$_POST['id']);
 
-		$query = "UPDATE guestuser set name = '$name',address = '$address',email = '$email',Mobile_number = '$number',status = '$status' where id = '$id'";
-		mysqli_query($con, $query);
-		header("location:Practice.php?msg=2");
+		
+		if (isset($_POST['send'])) {
+			$name = mysqli_real_escape_string($con,$_POST['name']);
+			$address = mysqli_real_escape_string($con,$_POST['address']); 
+			$email = mysqli_real_escape_string($con,$_POST['email']);
+			$number = mysqli_real_escape_string($con,$_POST['number']);
+			$status = mysqli_real_escape_string($con,$_POST['status']);
+			$query = "insert into guestuser(name,address,email,mobile_number,status)values('$name','$address','$email','$number','$status')";
+			mysqli_query($con,$query);
+			unset($_SESSION['post_data']);
+			header("location:Practice.php?msg=0");
+		}
+		if (isset($_POST['update'])) {
+			$name = mysqli_real_escape_string($con,$_POST['name']);
+			$address = mysqli_real_escape_string($con,$_POST['address']);
+			$email = mysqli_real_escape_string($con,$_POST['email']);
+			$number = mysqli_real_escape_string($con,$_POST['number']);
+			$status = mysqli_real_escape_string($con,$_POST['status']);
+			$id = mysqli_real_escape_string($con,$_POST['id']);
+
+			$query = "UPDATE guestuser set name = '$name',address = '$address',email = '$email',Mobile_number = '$number',status = '$status' where id = '$id'";
+			mysqli_query($con, $query);
+			header("location:Practice.php?msg=2");
+		}
+		
+	}else{
+		if (isset($_POST['send'])) {
+			header("location:practice.php?msg=3");
+		}else if(isset($_POST['update'])){
+			header("location:edit.php?msg=3");
+		}
 	}
-	
-}else{
-	if (isset($_POST['send'])) {
-		header("location:practice.php?msg=3");
-	}else if(isset($_POST['update'])){
-		header("location:edit.php?msg=3");
-	}
-}
 	if ($a == 0) {
-		
+
 		if (isset($_POST['loginsend'])){
-		$username = mysqli_real_escape_string($con, $_POST['username']);
-		$password = mysqli_real_escape_string($con, md5($_POST['password']));
+			$username = mysqli_real_escape_string($con, $_POST['username']);
+			$password = mysqli_real_escape_string($con, md5($_POST['password']));
 
-		$query = "INSERT into login(Username,Password)values('$username','$password')";
-		mysqli_query($con, $query);
-		header("location:loginshow.php?msg=0");
-	}
-	if (isset($_POST['loginupdate'])) {
-		
-		$username = mysqli_real_escape_string($con, $_POST['username']);
-		$password = mysqli_real_escape_string($con, md5($_POST['password']));
-		$id = mysqli_real_escape_string($con,$_POST['id']);
+			$query = "INSERT into login(Username,Password)values('$username','$password')";
+			mysqli_query($con, $query);
+			header("location:loginshow.php?msg=0");
+		}
+		if (isset($_POST['loginupdate'])) {
+			
+			$username = mysqli_real_escape_string($con, $_POST['username']);
+			$password = mysqli_real_escape_string($con, md5($_POST['password']));
+			$id = mysqli_real_escape_string($con,$_POST['id']);
 
-		$query = "UPDATE login set Username = '$username', Password = '$password' WHERE id = '$id'";
-		mysqli_query($con, $query);
-		header("location:loginshow.php?msg=2");
-	}
+			$query = "UPDATE login set Username = '$username', Password = '$password' WHERE id = '$id'";
+			mysqli_query($con, $query);
+			header("location:loginshow.php?msg=2");
+		}
 	}else{
 		header("location:loginshow.php");
 	}
 
-	
+
 	if (isset($_GET['delete'])) {
 		$id = $_GET['delete'];
 		mysqli_query($con, "DELETE from guestuser where id = '$id'");
@@ -178,17 +178,20 @@ $i = 0;
 	if (isset($_POST['deleteSelected'])) {
 		if($_POST['apply_dropdown']=='option2'){
 			$checkbox = $_POST['checkbox'];
-			for ($i=0; $i <count($checkbox) ; $i++) { 
-				
-				$del_id = $checkbox[$i];
-				$sql = "Delete from guestuser where id = '$del_id'";
-				$result = mysqli_query($con, $sql);
-			}
-			if ($result) {
-				header("location:Practice.php?msg=1");
+			
+			if (is_null($checkbox)) {
+				header("location:Practice.php?msg=11");
 			}else{
-				echo "Sorry, failed to delete.";
+				for ($i=0; $i <count($checkbox) ; $i++) 
+				{ 
+					
+					$del_id = $checkbox[$i];
+					$sql = "Delete from guestuser where id = '$del_id'";
+					$result = mysqli_query($con, $sql);
+					header("location:Practice.php?msg=1");
+				}
 			}
+
 		}
 		else{
 			header("location:practice.php?msg=4");
@@ -198,21 +201,22 @@ $i = 0;
 	if (isset($_POST['LogindeleteSelected'])) {
 		if($_POST['apply_dropdown']=='option2'){
 			$checkbox = $_POST['checkbox'];
+			if (is_null($checkbox)) {
+				header("location:loginshow.php?msg=11");
+			}else{
 			for ($i=0; $i <count($checkbox) ; $i++) { 
-				
+
 				$del_id = $checkbox[$i];
 				$sql = "Delete from login where id = '$del_id'";
 				$result = mysqli_query($con, $sql);
-			}
-			if ($result) {
 				header("location:loginshow.php?msg=1");
-			}else{
-				echo "Sorry, failed to delete.";
 			}
+		}
+			
 		}
 		else{
 			header("location:loginshow.php?msg=4");
 		}
 	}
 
- ?>
+	?>

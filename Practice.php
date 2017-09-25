@@ -48,6 +48,10 @@ include("server.php"); ?>
 					$_GET['msg'] = "Successfully Deleted...";
 					$color = "green";
 				}
+				else if($type == "11"){
+					$_GET['msg'] = "Please choose at least one file";
+					$color = "red";
+				}
 				else if ($type == "2") {
 					$_GET['msg'] = "Successfully updated...";
 					$color = "green";
@@ -103,7 +107,7 @@ include("server.php"); ?>
 							<ul>
 								<li><a class="create-new-user" href="#">Create New users.</a></li>
 								<li><a class="current" href="Practice.php?msg=">Show users of guestbook</a></li> <!-- Add class "current" to sub menu items also -->
-								<li><a class="create-new-user-login" href="loginshow.php?msg=">Create new login User</a></li>
+								<li><a href="loginshow.php?msg=">Create new login User</a></li>
 								<li><a href="loginshow.php?msg=">Show login users.</a></li>
 							</ul>
 						</li>  
@@ -340,8 +344,7 @@ $(document).ready(function() {
 		$('#myTable').DataTable();
 	});
 	$(document).ready(function(){
-		$('.create-new-user,.create-new-user-login').click(function(){
-			
+		$('.create-new-user').click(function(){
 			jQuery( ".content-box-tabs li:nth-child(2) a" ).trigger('click');
 		});
 

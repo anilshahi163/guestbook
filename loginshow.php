@@ -48,6 +48,10 @@ include("server.php"); ?>
 					$_GET['msg'] = "Successfully Deleted...";
 					$color = "green";
 				}
+				else if($type == "11"){
+					$_GET['msg'] = "Please select a file first";
+					$color = "red";
+				}
 				else if ($type == "2") {
 					$_GET['msg'] = "Successfully updated...";
 					$color = "green";
