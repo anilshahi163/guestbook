@@ -71,7 +71,7 @@
 	}
 
 
-	$con = mysqli_connect('localhost','root','','crud');
+	$con = mysqli_connect('localhost','root','admin','crud');
 	$result = mysqli_query($con,"SELECT * from guestuser");
 	$loginresult = mysqli_query($con, "SELECT * from login");
 
