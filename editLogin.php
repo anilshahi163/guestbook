@@ -253,7 +253,7 @@ if (isset($_GET['id'])) {
 							Open Modal
 						</span></a></li>
 
-						<li><a class="shortcut-button" href="loginshow.php"><span>
+						<li><a class="shortcut-button" href="loginshow.php?msg="><span>
 							<img src="assets/Images/icons/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
 							See Users
 						</span></a></li>

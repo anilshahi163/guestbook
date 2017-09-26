@@ -104,7 +104,7 @@ include("server.php"); ?>
 								Guestbook Transactions
 							</a>
 							<ul>
-								<li><a class = "create-new-user" href="#">Create New users.</a></li>
+								<li><a class = "create-new-user" href="Practice.php?msg=">Create New users.</a></li>
 								<li><a class="current" href="Practice.php?msg=">Show users of guestbook</a></li> <!-- Add class "current" to sub menu items also -->
 								<li><a class = "create-login-user" href="#">Create new login User</a></li>
 								<li><a href="loginshow.php?msg=">Show login users.</a></li>
@@ -203,7 +203,7 @@ include("server.php"); ?>
 							Open Modal
 						</span></a></li>
 
-						<li><a class="shortcut-button" href="#"><span>
+						<li><a class="shortcut-button" href="loginshow.php?msg="><span>
 							<img src="assets/Images/icons/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
 							See Users
 						</span></a></li>

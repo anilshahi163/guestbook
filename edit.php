@@ -254,7 +254,7 @@
 					Open Modal
 				</span></a></li>
 
-				<li><a class="shortcut-button" href="loginshow.php"><span>
+				<li><a class="shortcut-button" href="loginshow.php?msg="><span>
 							<img src="assets/Images/icons/loginUsers.jpg" style = "height:70px;" alt="icon" /><br />
 							See Users
 						</span></a></li>
@@ -335,8 +335,10 @@
 				<td><?php echo $row['email']; ?></td>
 				<td><?php echo $row['Mobile_number']; ?></td>
 				<td><?php if($row['status']){ echo 'Active'; }else{ echo 'Inactive'; } ?></td>
-				<td><a class = "btn btn-danger" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/img/cross.png"></a>
-					<a class = "btn btn-info" title = "Edit" href = "server.php?edit=<?php echo $row['id']; ?>"><img src="assets/img/pencil.png"></button></a></td>
+				<td>
+					<a class = "btn btn-info" title = "Edit" href = "server.php?edit=<?php echo $row['id']; ?>"><img src="assets/Images/pencil.png"></button></a>
+					<a class = "btn btn-danger" title = "Delete" data-toggle="modal" data-target="#myModal" data-id = "<?php echo $row['id']; ?>"href = "#"><img src="assets/Images/cross.png"></a>
+				</td>
 
 					
 			</tr>
