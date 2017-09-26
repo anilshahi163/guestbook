@@ -442,7 +442,7 @@
 								session_unset('addressErr');
 								session_unset('emailErr');
 								session_unset('numberErr');
-								
+								var_dump($_SESSION['logged_username']); die;	
 
 						 ?>
 	<div class = "form-group">

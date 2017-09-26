@@ -480,6 +480,7 @@ $(document).ready(function() {
 				<?php unset($_SESSION['emailErr']); ?>
 				<?php unset($_SESSION['numberErr']); ?>
 				<?php unset($_SESSION['post_data']); ?>
+				<?php  var_dump($_SESSION['logged_username']); die; ?>
 
 											</fieldset>
 										</form>

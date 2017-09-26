@@ -107,9 +107,10 @@
 			$email = mysqli_real_escape_string($con,$_POST['email']);
 			$number = mysqli_real_escape_string($con,$_POST['number']);
 			$status = mysqli_real_escape_string($con,$_POST['status']);
+
 			$query = "insert into guestuser(name,address,email,mobile_number,status)values('$name','$address','$email','$number','$status')";
 			mysqli_query($con,$query);
-			unset($_SESSION['post_data']);
+			
 			header("location:Practice.php?msg=0");
 		}
 		if (isset($_POST['update'])) {
@@ -119,7 +120,7 @@
 			$number = mysqli_real_escape_string($con,$_POST['number']);
 			$status = mysqli_real_escape_string($con,$_POST['status']);
 			$id = mysqli_real_escape_string($con,$_POST['id']);
-
+			var_dump($_SESSION['logged_username']); die;
 			$query = "UPDATE guestuser set name = '$name',address = '$address',email = '$email',Mobile_number = '$number',status = '$status' where id = '$id'";
 			mysqli_query($con, $query);
 			header("location:Practice.php?msg=2");
@@ -127,7 +128,7 @@
 		
 	}else{
 		if (isset($_POST['send'])) {
-			header("location:practice.php?msg=3");
+			header("location:Practice.php?msg=3");
 		}else if(isset($_POST['update'])){
 			header("location:edit.php?msg=3");
 		}
