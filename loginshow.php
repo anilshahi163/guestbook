@@ -439,7 +439,9 @@ $(document).ready(function() {
 												<input type = "submit" class = "button" value = "send" name = "loginsend">
 											</div>
 										</div>
-
+										<?php unset($_SESSION['usernameErr']); ?>
+				<?php unset($_SESSION['passwordErr']); ?>
+				<?php unset($_SESSION['post_data']); ?>
 
 
 									</fieldset>

@@ -110,6 +110,7 @@
 
 			$query = "insert into guestuser(name,address,email,mobile_number,status)values('$name','$address','$email','$number','$status')";
 			mysqli_query($con,$query);
+			unset($_SESSION['post_data']);
 			
 			header("location:Practice.php?msg=0");
 		}
@@ -120,7 +121,7 @@
 			$number = mysqli_real_escape_string($con,$_POST['number']);
 			$status = mysqli_real_escape_string($con,$_POST['status']);
 			$id = mysqli_real_escape_string($con,$_POST['id']);
-			var_dump($_SESSION['logged_username']); die;
+			
 			$query = "UPDATE guestuser set name = '$name',address = '$address',email = '$email',Mobile_number = '$number',status = '$status' where id = '$id'";
 			mysqli_query($con, $query);
 			header("location:Practice.php?msg=2");
@@ -154,7 +155,11 @@
 			header("location:loginshow.php?msg=2");
 		}
 	}else{
-		header("location:loginshow.php");
+		if (isset($_POST['loginsend'])) {
+			header("location:loginshow.php?msg=3");
+		}else if(isset($_POST['loginupdate'])){
+			header("location:editlogin.php?msg=3");
+		}
 	}
 
 

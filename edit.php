@@ -270,7 +270,7 @@
 					<h3>Update Form</h3>
 					
 					<ul class="content-box-tabs">
-						<li><a href="#tab1">Table</a></li> <!-- href must be unique and match the id of target div -->
+						<li><a href="#tab1" style = "display:none">Table</a></li> <!-- href must be unique and match the id of target div -->
 						<li><a href="#tab2" class="default-tab">Forms</a></li>
 					</ul>
 					
@@ -280,7 +280,7 @@
 				
 				<div class="content-box-content">
 					
-					<div class="tab-content" id="tab1"> <!-- This is the target div. id must match the href of this div's tab -->
+					<div class="tab-content" id="tab1" > <!-- This is the target div. id must match the href of this div's tab -->
 						
 						<table>
 							
@@ -442,7 +442,7 @@
 								session_unset('addressErr');
 								session_unset('emailErr');
 								session_unset('numberErr');
-								var_dump($_SESSION['logged_username']); die;	
+								
 
 						 ?>
 	<div class = "form-group">

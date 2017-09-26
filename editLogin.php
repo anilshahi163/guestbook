@@ -269,7 +269,7 @@ if (isset($_GET['id'])) {
 							<h3>Update Form</h3>
 
 							<ul class="content-box-tabs">
-								<li><a href="#tab1">Table</a></li> <!-- href must be unique and match the id of target div -->
+								<li><a href="#tab1" style = "display:none">Table</a></li> <!-- href must be unique and match the id of target div -->
 								<li><a href="#tab2" class="default-tab">Forms</a></li>
 							</ul>
 
